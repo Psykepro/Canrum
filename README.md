@@ -5,4 +5,4 @@ Softuni Advanced C#  TEAM "CANRUM" project repository
 Ники - StreamReader class
 Гошо - class Library - библиотеки / награда - 
 Пацо - class Bosses
-Вики?! - class Player 
+Вики?! - class Player .
