@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,7 +15,8 @@ namespace Canrum
     {
         static void Main(string[] args)
         {
-            
+            Reader.ReadFile("textTest.txt");
+            CodeCompiler();
         }
 
         static void CodeCompiler()
@@ -31,6 +33,5 @@ namespace Canrum
 
             CodeManager.CompileAndRun(code, "Boss Nakov");
         }
-        
     }
 }
