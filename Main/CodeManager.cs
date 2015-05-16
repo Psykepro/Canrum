@@ -11,14 +11,14 @@ namespace Canrum
 {
     public class CodeManager
     {
-        public static bool CompileAndRun(String sourceFile, String exeFile, String parameters)
+        public static bool CompileAndRun(List<string> sourceFile, String parameters)
         {
-            bool result = CompileCode(sourceFile, exeFile);
-            if (result) Process.Start(exeFile, parameters);
+            bool result = CompileCode(sourceFile, "program.exe");
+            if (result) Process.Start("program.exe", parameters);
             return result;
         }
 
-        private static bool CompileCode(String sourceFile, String exeFile)
+        private static bool CompileCode(List<string> sourceFile, String exeFile)
         {
             CodeDomProvider provider = new CSharpCodeProvider();
             CompilerParameters cp = new CompilerParameters();
@@ -41,23 +41,26 @@ namespace Canrum
             {
                 cp.MainClass = "Main2.Main1";
             }
-            sourceFile = "using System;\n" +
-                         "using System.Collections.Generic;\n" +
-                         "using System.Text;\n" +
-                         "using System.Linq;\n" +
-                         "using System.Threading.Tasks;\n" +
-                         "namespace Main2\n" +
-                         "{\n" +
-                         "class Main1\n" +
-                         "{\n" +
-                         "static void Main(string[] args)\n" +
-                         "{\n" +
-                         sourceFile +
-                         "Console.ReadKey();\n"+
-                         "}\n" +
-                         "}\n" +
-                         "}\n";
-            CompilerResults cr = provider.CompileAssemblyFromSource(cp, sourceFile);
+            sourceFile.InsertRange(0, new string[]
+            {
+                "using System;\n",
+                "using System.Collections.Generic;\n",
+                "using System.Text;\n",
+                "using System.Linq;\n",
+                "using System.Threading.Tasks;\n",
+                "namespace Main2\n",
+                "{\n",
+                "class Main1\n",
+                "{\n",
+                "static void Main(string[] args)\n",
+                "{\n",
+                sourceFile +
+                "Console.ReadKey();\n",
+                "}\n",
+                "}\n",
+                "}\n"
+            });
+            CompilerResults cr = provider.CompileAssemblyFromSource(cp, sourceFile.ToArray());
 
             if (cr.Errors.Count > 0)
             {

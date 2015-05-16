@@ -14,16 +14,23 @@ namespace Canrum
     {
         static void Main(string[] args)
         {
-            List<string> code = new List<string>();
-            code.Add(Console.ReadLine());
-            while (code.Last() != "compile")
-            {
-                code.Add(Console.ReadLine());
-            }
-            code.RemoveAt(code.Count-1);
-            CodeManager.CompileAndRun(String.Join("", code.ToArray()), "test.exe", "Boss Nakov");   
+            
         }
 
+        static void CodeCompiler()
+        {
+            List<string> code = new List<string>();
+            string line = Console.ReadLine();
+
+            while (line != "compile")
+            {
+                if (Console.KeyAvailable)
+                    code.Add(Console.ReadLine());
+                line = Console.ReadLine();
+            }
+
+            CodeManager.CompileAndRun(code, "Boss Nakov");
+        }
         
     }
 }
