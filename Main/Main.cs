@@ -1,15 +1,37 @@
 ﻿using System;
+using System.CodeDom;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.CSharp;
 
-namespace Main
+namespace Canrum
 {
-    class Main
+    static class Canrum
     {
         static void Main(string[] args)
         {
+            Reader.ReadFile("textTest.txt");
+            CodeCompiler();
+        }
+
+        static void CodeCompiler()
+        {
+            List<string> code = new List<string>();
+            string line = Console.ReadLine();
+
+            while (line != "compile")
+            {
+                if (Console.KeyAvailable)
+                    code.Add(Console.ReadLine());
+                line = Console.ReadLine();
+            }
+
+            CodeManager.CompileAndRun(code, "Boss Nakov");
         }
     }
 }
