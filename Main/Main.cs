@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,17 +15,15 @@ namespace Canrum
     {
         static void Main(string[] args)
         {
-            List<string> code = new List<string>();
-            code.Add(Console.ReadLine());
-            while (code.Last() != "compile")
-            {
-                code.Add(Console.ReadLine());
-            }
-            code.RemoveAt(code.Count-1);
-            CodeManager.CompileAndRun(String.Join("", code.ToArray()), "test.exe", "Boss Nakov");  
- 
-        }
-
-        
+            Reader.ReadFile("textTest.txt");
+            //List<string> code = new List<string>();
+            //code.Add(Console.ReadLine());
+            //while (code.Last() != "compile")
+            //{
+            //    code.Add(Console.ReadLine());
+            //}
+            //code.RemoveAt(code.Count-1);
+            //CodeManager.CompileAndRun(String.Join("", code.ToArray()), "test.exe", "Boss Nakov");       
+        }       
     }
 }
