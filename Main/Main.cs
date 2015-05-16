@@ -21,7 +21,8 @@ namespace Canrum
                 code.Add(Console.ReadLine());
             }
             code.RemoveAt(code.Count-1);
-            CodeManager.CompileAndRun(String.Join("", code.ToArray()), "test.exe", "Boss Nakov");   
+            CodeManager.CompileAndRun(String.Join("", code.ToArray()), "test.exe", "Boss Nakov");  
+ 
         }
 
         
