@@ -1,1 +1,3 @@
 D:\УНИ\Software University\TEAMWORK CANRUM\trunk\Main\bin\Debug\Main.exe.config
+C:\Users\viki__000\Documents\GitHub\Canrum\Main\bin\Debug\Main.exe.config
+C:\Users\viki__000\Documents\GitHub\Canrum\Main\obj\Debug\Canrum.csprojResolveAssemblyReference.cache
