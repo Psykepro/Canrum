@@ -11,7 +11,22 @@ namespace Canrum
 {
     public class CodeManager
     {
-        public static bool CompileAndRun(List<string> sourceFile, String parameters)
+        public static void StartCodeCompiler()
+        {
+            List<string> code = new List<string>();
+            string line = Console.ReadLine();
+
+            while (line != "compile")
+            {
+                if (Console.KeyAvailable)
+                    code.Add(Console.ReadLine());
+                line = Console.ReadLine();
+            }
+
+            CompileAndRun(code, "Boss Nakov");
+        }
+
+        private static bool CompileAndRun(List<string> sourceFile, String parameters)
         {
             bool result = CompileCode(sourceFile, "program.exe");
             if (result) Process.Start("program.exe", parameters);

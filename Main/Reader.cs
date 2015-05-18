@@ -3,33 +3,42 @@ using System.IO;
 
 class Reader
 {
-    public static void ReadFile(string fileName)
+    public static bool ReadFile(string fileName)
     {
         try
         {
-            
-            string[] textSplit = new string[4];
-            string test = String.Empty;
+            string test;
+
             using (StreamReader sr = new StreamReader(fileName))
             {
                 test = sr.ReadToEnd();
             }
-            textSplit = test.Split('⑱');
-            PrintProblem(textSplit);
+
+            var textSplit = test.Split('⑱');
+            return PrintProblem(textSplit);
         }
-        catch (FileNotFoundException e)
+        catch (FileNotFoundException)
         {
             Console.WriteLine("File not found!");
+            return false;
         }
 
     }
 
-    public static void PrintProblem(string[] tokens)
+    private static bool PrintProblem(string[] tokens)
     {
+        if (tokens.Length != 4)
+        {
+            Console.WriteLine("File is not in the correct format");
+            return false;
+        }
+
         Console.WriteLine(tokens[0]);
         Console.WriteLine(tokens[1]);
         Console.WriteLine(tokens[2]);
-        Console.WriteLine(tokens[3]);        
+        Console.WriteLine(tokens[3]);
+
+        return true;
     }
 }
 

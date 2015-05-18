@@ -15,23 +15,10 @@ namespace Canrum
     {
         static void Main(string[] args)
         {
-            Reader.ReadFile("textTest.txt");
-            CodeCompiler();
+            if(Reader.ReadFile("test.cs"))
+                CodeManager.StartCodeCompiler();
         }
 
-        static void CodeCompiler()
-        {
-            List<string> code = new List<string>();
-            string line = Console.ReadLine();
-
-            while (line != "compile")
-            {
-                if (Console.KeyAvailable)
-                    code.Add(Console.ReadLine());
-                line = Console.ReadLine();
-            }
-
-            CodeManager.CompileAndRun(code, "Boss Nakov");
-        }
+        
     }
 }
