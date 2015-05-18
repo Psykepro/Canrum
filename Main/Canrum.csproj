@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Boss.cs" />
     <Compile Include="CodeManager.cs" />
     <Compile Include="Libraries.cs" />
     <Compile Include="Main.cs" />
