@@ -4,41 +4,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Canrum
+namespace Main
 {
 
     public class Boss
     {
-        private int level;
-        private string name;
-        private List<Mission> missions = new List<Mission>();
-        private string award;
+        private int Level;
+        private string Name;
+        private List<Mission> Missions = new List<Mission>();
+        private string Award;
 
 
         public Boss(string name, int level)
         {
-            this.name = name;
-            this.level = level;
-            initMissions(level);
-            initAward(level);
+            Name = name;
+            Level = level;
+            InitMissions(level);
+            InitAward(level);
         }
 
-        private void initMissions(int level)
+        private void InitMissions(int level)
         {
             for (int i = 0; i < 3; i++)
             {
-                this.missions.Add(new Mission(level));
+                Missions.Add(new Mission(level));
             }
         }
 
-        private void initAward(int level)
+        private void InitAward(int level)
         {
-            this.award = Libraries.GetLibraryAsGift(level);
+            Award = Libraries.GetLibraryAsGift(level);
         }
 
-        public Mission GetMission(int rnd)
+        private Mission GetMission(int rnd)
         {
-            return missions[rnd];
+            return Missions[rnd];
         }
 
         public string GetAward(bool solved)
@@ -46,7 +46,7 @@ namespace Canrum
             string result;
             if (solved)
             {
-                result = "For solving the problem, you receive " + award + "as a reward.";
+                result = "For solving the problem, you receive " + Award + "as a reward.";
             }
             else
             {
