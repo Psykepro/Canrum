@@ -22,8 +22,7 @@ namespace Main
 
             while (line != endCode)
             {
-                if (Console.KeyAvailable)
-                    code.Add(Console.ReadLine());
+                code.Add(line);
                 line = Console.ReadLine();
             }
 
@@ -80,7 +79,9 @@ namespace Main
                 "}\n",
                 "}\n"
             });
-            CompilerResults cr = provider.CompileAssemblyFromSource(cp, sourceFile.ToArray());
+
+            string finalCode = String.Join("", codeLines);
+            CompilerResults cr = provider.CompileAssemblyFromSource(cp, finalCode);
 
             if (cr.Errors.Count > 0)
             {
