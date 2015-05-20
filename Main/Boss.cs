@@ -11,10 +11,23 @@ namespace Main
     {
         private int Level;
         private string Name;
-        private List<Mission> Missions = new List<Mission>();
         private string Award;
-
-
+        private List<Mission> Missions = new List<Mission>();
+        private List<string> _bossNames = new List<string>
+        {
+            "Filkolev",
+            "a_rusenov",
+            "achebg",
+            "Bi0GaMe",
+            "vladislav.karamfilov",
+            "iordan_93",
+            "VGeorgiev",
+            "nikbikbank",
+            "RoYaL",
+            "mpeshev",
+            "Nakov"
+        };
+        
         public Boss(string name, int level)
         {
             Name = name;
@@ -34,6 +47,16 @@ namespace Main
         private void InitAward(int level)
         {
             Award = Libraries.GetLibraryAsGift(level);
+        }
+
+        private string GetBossName(int rnd, int level)
+        {
+            string name = _bossNames[rnd];
+            if (level == 5)
+            {
+                name = _bossNames[_bossNames.Count - 1];
+            }
+            return name;
         }
 
         private Mission GetMission(int rnd)
