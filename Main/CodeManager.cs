@@ -9,35 +9,39 @@ using Microsoft.CSharp;
 
 namespace Main
 {
-    public class CodeManager
+    public static class CodeManager
     {
-        public static void StartCodeCompiler()
+        public static void StartCodeCompiler(string[] libraries)
         {
             List<string> code = new List<string>();
+
+            string endCode = "compile";
+            Console.WriteLine("When you're done with the program, type {0} on the last line.", endCode);
+
             string line = Console.ReadLine();
 
-            while (line != "compile")
+            while (line != endCode)
             {
                 if (Console.KeyAvailable)
                     code.Add(Console.ReadLine());
                 line = Console.ReadLine();
             }
 
-            CompileAndRun(code, "Boss Nakov");
+            CompileAndRun(code, "Boss Nakov", libraries);
         }
 
-        private static bool CompileAndRun(List<string> sourceFile, String parameters)
+        private static bool CompileAndRun(List<string> sourceFile, string parameters, string[] libraries)
         {
-            bool result = CompileCode(sourceFile, "program.exe");
+            bool result = CompileCode(sourceFile, "program.exe", libraries);
             if (result) Process.Start("program.exe", parameters);
             return result;
         }
 
-        private static bool CompileCode(List<string> sourceFile, String exeFile)
+        private static bool CompileCode(List<string> sourceFile, String exeFile, string[] libraries)
         {
             CodeDomProvider provider = new CSharpCodeProvider();
             CompilerParameters cp = new CompilerParameters();
-
+            List<string> codeLines = new List<string>();
             cp.GenerateExecutable = true;
             cp.OutputAssembly = exeFile;
             cp.IncludeDebugInformation = false;
@@ -54,22 +58,23 @@ namespace Main
 
             if (provider.Supports(GeneratorSupport.EntryPointMethod))
             {
-                cp.MainClass = "Main2.Main1";
+                cp.MainClass = "ProblemNamespace.ProblemClass";
             }
-            sourceFile.InsertRange(0, new string[]
+            if(libraries != null)
+                codeLines.AddRange(libraries.Select(l => "using "+l+";"));
+            codeLines.AddRange(new[]
             {
                 "using System;\n",
-                "using System.Collections.Generic;\n",
-                "using System.Text;\n",
-                "using System.Linq;\n",
-                "using System.Threading.Tasks;\n",
-                "namespace Main2\n",
+                "namespace ProblemNamespace\n",
                 "{\n",
-                "class Main1\n",
+                "class ProblemClass\n",
                 "{\n",
                 "static void Main(string[] args)\n",
-                "{\n",
-                sourceFile +
+                "{\n"
+            });
+            codeLines.AddRange(sourceFile);
+            codeLines.AddRange(new[]
+            {
                 "Console.ReadKey();\n",
                 "}\n",
                 "}\n",
@@ -92,7 +97,7 @@ namespace Main
                 Console.WriteLine("Source {0} built into {1} successfully.",
                     sourceFile, cr.PathToAssembly);
                 Console.WriteLine("{0} temporary files created during the compilation.",
-                    cp.TempFiles.Count.ToString());
+                    cp.TempFiles.Count);
             }
 
             return cr.Errors.Count <= 0;

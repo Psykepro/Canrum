@@ -1,7 +1,7 @@
-﻿using System;
-using System.CodeDom;
+﻿using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -15,8 +15,27 @@ namespace Main
     {
         static void Main(string[] args)
         {
-            if(Reader.ReadFile("test.cs"))
-                CodeManager.StartCodeCompiler();
+
+            Console.Write("Number of players: ");
+            int numberOfPlayers = Int32.Parse(Console.ReadLine());
+            Player[] players = new Player[numberOfPlayers];
+
+            for (int i = 0; i < numberOfPlayers; i++)
+            {
+                players[i] = new Player();
+            }
+
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("It seems {0}.", e.Message);
+                throw;
+            }
+            players[0].StartCodeCompiler();
+            
         }
 
         

@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace Main
 {
-    class Mission
+    class Library : PlayerAward
     {
-        public Mission(int level)
+        public Library(string description)
+            : base(description)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

@@ -17,30 +17,32 @@ namespace Main
                 }
 
                 var textSplit = test.Split('⑱');
-                return PrintProblem(textSplit);
+                if (textSplit.Length != 4)
+                    throw new FormatException();
+
+                PrintProblem(textSplit);
+
+                return true;
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine("File not found!");
+                Console.WriteLine("Problem file not found!");
+                return false;
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Problem file not in correct format!");
                 return false;
             }
 
         }
 
-        private static bool PrintProblem(string[] tokens)
+        private static void PrintProblem(string[] tokens)
         {
-            if (tokens.Length != 4)
-            {
-                Console.WriteLine("File is not in the correct format");
-                return false;
-            }
-
             Console.WriteLine(tokens[0]);
             Console.WriteLine(tokens[1]);
             Console.WriteLine(tokens[2]);
             Console.WriteLine(tokens[3]);
-
-            return true;
         }
     }
 }

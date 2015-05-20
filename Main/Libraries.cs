@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Main
 {
-    public class Libraries
+    public static class Libraries
     {
-        private static List<string> libraries = new List<string>()
+        private static readonly List<string> libraries = new List<string>()
         {
             "System.Activities",
             "System.AddIn",
@@ -48,9 +48,7 @@ namespace Main
             "System.Xaml"
         };
 
-        private Libraries()
-        {
-        }
+        static Libraries() { }
 
         public static string GetLibraryAsGift(int libraryIndex)
         {

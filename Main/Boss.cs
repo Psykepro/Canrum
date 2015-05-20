@@ -40,7 +40,7 @@ namespace Main
         {
             for (int i = 0; i < 3; i++)
             {
-                Missions.Add(new Mission(level));
+                Missions.Add(new Mission(Level));
             }
         }
 
