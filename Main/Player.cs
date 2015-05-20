@@ -6,48 +6,45 @@ using System.Threading.Tasks;
 
 namespace Main
 {
-    class Player
+    public class Player
     {
-        public static string Name;
-        public int ExperiencePoints { get; set; }
+        public string Name { get; private set; }
+        public int Points { get; set; }
         public int Level { get; set; }
-        public List<PlayerAward> Awards { get; set; }
+        public List<string> Awards { get; private set; }
+        public List<Boss> Bosses { get; private set; }
 
-        public static Player CreateDefaultPlayer()
+        public Player(string name)
         {
-            Player player = new Player();
-            player.Level = 0;
-            player.ExperiencePoints = 0;
-            //player.Awards.Add(new PlayerAward());
-            return player;
-        }
-        public int CalculateExperience(int level)
-        {
-            double experience = 100;
-
-            for (int i = 2; i <= level; i++)
-            {
-                experience += experience * 0.5;
-            }
-
-            return (int)experience;
+            Name = name;
+            Points = 0;
+            Level = 1;
+            Awards = new List<string>();
+            Bosses = new List<Boss>();
         }
 
-        public void AddLibrary(string library)
+        //public int CalculateExperience(int level)
+        //{
+        //    double experience = 100;
+
+        //    for (int i = 2; i <= level; i++)
+        //    {
+        //        experience += experience * 0.5;
+        //    }
+
+        //    return (int)experience;
+        //}
+
+        public void ReceiveAward()
         {
-            Awards.Add(new Library(library));
+            Awards.Add(Bosses.Last().Award);
         }
 
         public void StartCodeCompiler()
         {
             string[] libraries;
-            if (Awards != null)
-            {
-                if (!Awards.Any(a => a is Library)) libraries = null;
-                libraries = Awards.Where(a => a is Library).Select(a => a.Description).ToArray();
-            }
-            else libraries = null;
-            
+            libraries = Awards.Count == 0 ? null : Awards.ToArray();
+
             if (Reader.ReadFile("test.cs"))
                 CodeManager.StartCodeCompiler(libraries);
         }

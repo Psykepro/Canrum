@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Main
 {
-    class Reader
+    public static class Reader
     {
         public static bool ReadFile(string fileName)
         {

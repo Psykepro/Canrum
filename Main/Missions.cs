@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Main
 {
-    class Mission
+    public class Mission
     {
         public Mission(int level)
         {
