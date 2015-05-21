@@ -14,10 +14,11 @@ namespace Main
         public string Award { get; private set; }
         public Mission Mission { get; private set; }
 
-        public Boss(string name, int level)
+        public Boss(string name, int level, int rnd)
         {
             Name = name;
             this.level = level;
+            Mission = new Mission(level, rnd);
             //InitMissions(level);
             //InitAward(level);
         }

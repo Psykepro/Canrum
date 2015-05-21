@@ -10,6 +10,8 @@ namespace Main
     {
         public string Name { get; private set; }
         public int Points { get; set; }
+        public bool DoublePoints { get; set; }
+        public int PointsModifier { get; set; }
         public int Level { get; set; }
         public List<string> Awards { get; private set; }
         public List<Boss> Bosses { get; private set; }
@@ -40,13 +42,20 @@ namespace Main
             Awards.Add(Bosses.Last().Award);
         }
 
-        public void StartCodeCompiler()
+        private string StartCodeCompiler(Mission mission)
         {
             string[] libraries;
             libraries = Awards.Count == 0 ? null : Awards.ToArray();
 
             if (Reader.ReadFile("test.cs"))
-                CodeManager.StartCodeCompiler(libraries);
+             CodeManager.StartCodeCompiler(libraries);
         }
+
+        public bool MissionSuccess(Mission mission)
+        {
+            return StartCodeCompiler(mission) == Reader.ExpectedResult(mission);
+        }
+
+
     }
 }

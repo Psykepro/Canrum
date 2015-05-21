@@ -16,48 +16,93 @@ namespace Main
             StartScreen();
             InitGame();
             Tick();
-
-
         }
 
 
-        public static void StartScreen()
+        private static void StartScreen()
         {
             
         }
 
 
-        public static void InitGame()
+        private static void InitGame()
         {
-            Console.Write("Number of players: ");
+            Console.WriteLine("Number of players: ");
             int numberOfPlayers = Int32.Parse(Console.ReadLine());
 
             for (int i = 0; i < numberOfPlayers; i++)
             {
-                Players.Add(new Player());
+                Console.WriteLine("Enter player name:");
+                Players.Add(new Player(Console.ReadLine()));
             }
         }
 
-        public static void Tick()
+        private static void Tick()
         {
-            bool win = false;
-
-            while (win == false)
+            for (int i = 0; i < 5; i++)
             {
-                for (int i = 0; i < 5; i++)
+                foreach (var player in Players)
                 {
-                    foreach (var player in Players)
-                    {
-                        Console.WriteLine(player.Name + "'s turn.");
-                        Console.WriteLine(player.Name + "meets" player.Boss[0].Name);
-                        player.StartCodeCompiler();
+                    player.PointsModifier = player.DoublePoints ? 4 : 2;
+                        
+                    Console.WriteLine(player.Name + "'s turn.");
+                    Console.WriteLine(player.Name + "meets" + player.Bosses[i].Name);
+                    Reader.PrintMission(player.Bosses[i].Mission);
 
+                    if (player.MissionSuccess(player.Bosses[i].Mission))
+                    {
+                        if ((Players.Count == 1) && (i == 4))
+                        {
+                            Console.WriteLine("You win!");
+                            break;
+                        }
+                        player.DoublePoints = false;
+                        player.Points += 5 * player.PointsModifier;
+                        if (i < 4)
+                        {
+                            player.Awards.Add(player.Bosses[i].Award);
+                        }
+                    }
+                    else
+                    {
+
+                        Console.WriteLine(player.Bosses[i].Name + " says: again for half points or next for double?");
+                        if (Console.ReadLine() == "again")
+                        {
+                            player.PointsModifier = 1;
+                            player.DoublePoints = false;
+                            if (player.MissionSuccess(player.Bosses[i].Mission))
+                            {
+                                player.Points += 5 * player.PointsModifier;
+                                if (i < 4)
+                                {
+                                    player.Awards.Add(player.Bosses[i].Award);
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            player.DoublePoints = true;
+                            break;
+                        }
                     }
                 }
             }
+
+
         }
 
-
+        private static void CheckWin(List<Player> players)
+        {
+            for (int i = 0; i < players.Count; i++)
+            {
+                
+            }
+        }
         
     }
 }

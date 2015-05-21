@@ -37,12 +37,10 @@ namespace Main
 
         }
 
-        private static void PrintProblem(string[] tokens)
+        public static void PrintMission(Mission mission)
         {
+
             Console.WriteLine(tokens[0]);
-            Console.WriteLine(tokens[1]);
-            Console.WriteLine(tokens[2]);
-            Console.WriteLine(tokens[3]);
         }
     }
 }

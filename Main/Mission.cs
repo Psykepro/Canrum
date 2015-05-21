@@ -8,8 +8,13 @@ namespace Main
 {
     public class Mission
     {
-        public Mission(int level)
+        private int Level { get; set; }
+        private int Number { get; set; }
+
+        public Mission(int level, int rnd)
         {
+            Level = level;
+            Number = rnd;
             throw new NotImplementedException();
         }
     }
