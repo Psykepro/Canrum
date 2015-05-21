@@ -1,0 +1,61 @@
+You are given three numbers A, B, C, where B is actually the secret code symbol.
+•	If the code is 2 – find the remainder after A is divided by C. Example: A = 5, C = 3, A % C = 2.
+•	If the code is 4 – find the sum of A and C. Example: A = 5, C = 3, A + C = 8.
+•	If the code is 8 – find the product of A and C. Example: A = 5, C = 3, A * C = 15.
+After you find the result R from the code transformation, if R can be divided by 4 with remainder 0, find R divided by 4. Otherwise find the remainder after R is divided by 4. 
+For example, if R is 16, it can be divided by 4 with no remainder, so the answer is 4. If R is 9, it cannot be divided by 4, so the answer is 1.
+Find the result: % 10 2 6% 1 4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5

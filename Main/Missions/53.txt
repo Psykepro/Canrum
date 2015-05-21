@@ -1,0 +1,24 @@
+You are given a number (SALT) and a text. The text must be encoded using the SALT.
+The encoding is done as follows:
+•	If the character is “@”, stop the program
+•	If the character in the original text is a letter, multiply its char code by the given SALT and add 1000.
+•	If the character in the original text is a digit, add to its char code SALT and add 500
+•	If the character in the original text is not a digit or letter (any other symbol), subtract from its char code SALT
+•	After performing the above operations on the character in the original text:
+o	If the character is on even position in the original text - divide the encoded value by 100 and round the precision to 2 decimal digits right of the decimal point
+o	Else if the character is on odd position in the original text - multiply by 100
+o	The first character is at position 0. 
+Your task is to encode a text, using the rules above the original text, by given the encoded values for each character.
+%9
+I love C#!@
+%16.57
+2300
+19.72
+199900
+20.62
+190900
+0.23
+160300
+0.26
+2400
+
