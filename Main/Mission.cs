@@ -15,7 +15,6 @@ namespace Main
         {
             Level = level;
             Number = rnd;
-            throw new NotImplementedException();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Main
 {
     public static class Resources
     {
-        private static readonly string[] Libraries =
+        public static readonly string[] Libraries =
         {
             "System.Activities",
             "System.AddIn",
@@ -49,7 +49,7 @@ namespace Main
             "System.Xaml"
         };
 
-        private static readonly string[] BossNames =
+        public static readonly string[] BossNames =
         {
             "Filkolev",
             "a_rusenov",
