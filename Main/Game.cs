@@ -41,11 +41,7 @@ namespace Main
 
         private static void Tick()
         {
-            if (Players.Count == 1)
-            {
-                goto SingleplayerMode;
-            }
-            else
+            if (Players.Count > 1)
             {
                 goto MultiplayerMode;
             }
