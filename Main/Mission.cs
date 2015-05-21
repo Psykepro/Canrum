@@ -8,8 +8,8 @@ namespace Main
 {
     public class Mission
     {
-        private int Level { get; set; }
-        private int Number { get; set; }
+        public int Level { get; private set; }
+        public int Number { get; private set; }
 
         public Mission(int level, int rnd)
         {

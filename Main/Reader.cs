@@ -5,42 +5,46 @@ namespace Main
 {
     public static class Reader
     {
-        public static bool ReadFile(string fileName)
+        static string[] _missionText=new string[3];
+        public static void PrintMission(Mission mission)
         {
+            string fileName = mission.Level.ToString() + mission.Number.ToString() + ".txt";
+            StreamReader sr=new StreamReader(fileName);
             try
             {
-                string test;
-
-                using (StreamReader sr = new StreamReader(fileName))
+                using (sr)
                 {
-                    test = sr.ReadToEnd();
+                    string readTheFile = sr.ReadToEnd();
+                    _missionText = readTheFile.Split(new[] { '⑱' }, StringSplitOptions.RemoveEmptyEntries);
                 }
-
-                var textSplit = test.Split('⑱');
-                if (textSplit.Length != 4)
-                    throw new FormatException();
-
-                PrintProblem(textSplit);
-
-                return true;
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine("Problem file not found!");
-                return false;
+                Console.WriteLine("File not found!");
             }
-            catch (FormatException)
-            {
-                Console.WriteLine("Problem file not in correct format!");
-                return false;
-            }
-
+            Console.WriteLine(_missionText[0]);
         }
 
-        public static void PrintMission(Mission mission)
+        public static string[] GetInputAndOutput(Mission mission)
         {
-
-            Console.WriteLine(tokens[0]);
+            string[] inputOutput = new string[2];
+            string fileName = mission.Level.ToString() + mission.Number.ToString() + ".txt";
+            StreamReader sr = new StreamReader(fileName);
+            try
+            {
+                using (sr)
+                {
+                    string readTheFile = sr.ReadToEnd();
+                    _missionText = readTheFile.Split(new[] { '⑱' }, StringSplitOptions.RemoveEmptyEntries);
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("File not found!");               
+            }
+            inputOutput[0] = _missionText[1];
+            inputOutput[1] = _missionText[2];
+            return inputOutput;
         }
     }
 }
