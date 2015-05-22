@@ -5,46 +5,30 @@ namespace Main
 {
     public static class Reader
     {
-        static string[] _missionText=new string[3];
-        public static void PrintMission(Mission mission)
+        public static string[][] GetMissionData(string filePath)
         {
-            string fileName = mission.Level.ToString() + mission.Number.ToString() + ".txt";
-            StreamReader sr=new StreamReader(fileName);
+            string[][] data = null;
+
             try
             {
-                using (sr)
+                using (StreamReader sr = new StreamReader(filePath))
                 {
+
                     string readTheFile = sr.ReadToEnd();
-                    _missionText = readTheFile.Split(new[] { '⑱' }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] dataParts = readTheFile.Split(new[] {'⑱'}, StringSplitOptions.RemoveEmptyEntries);
+                    data = new string[3][];
+                    data[0] = new[] {dataParts[0]};
+                    data[1] = dataParts[1].Split('Ẋ');
+                    data[2] = dataParts[2].Split('Ẋ');
+
                 }
             }
             catch (FileNotFoundException)
             {
                 Console.WriteLine("File not found!");
             }
-            Console.WriteLine(_missionText[0]);
-        }
 
-        public static string[] GetInputAndOutput(Mission mission)
-        {
-            string[] inputOutput = new string[2];
-            string fileName = mission.Level.ToString() + mission.Number.ToString() + ".txt";
-            StreamReader sr = new StreamReader(fileName);
-            try
-            {
-                using (sr)
-                {
-                    string readTheFile = sr.ReadToEnd();
-                    _missionText = readTheFile.Split(new[] { '⑱' }, StringSplitOptions.RemoveEmptyEntries);
-                }
-            }
-            catch (FileNotFoundException)
-            {
-                Console.WriteLine("File not found!");               
-            }
-            inputOutput[0] = _missionText[1];
-            inputOutput[1] = _missionText[2];
-            return inputOutput;
+            return data;
         }
     }
 }

@@ -3,37 +3,197 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using Microsoft.CSharp;
 
 namespace Main
 {
     public static class CodeManager
     {
-        public static void StartCodeCompiler(string[] libraries)
+
+        public static bool GetOutputFromCompiled(string[] libraries, string[] input, out string[] output)
         {
-            List<string> code = new List<string>();
+            var lines = GetProgramLines();
+
+            string exeFileName = "program1.exe";
+            bool compiledSuccessfully = CompileCode(lines, exeFileName, libraries);
+            if (!compiledSuccessfully)
+            {
+                output = null;
+                return false;
+            }
+
+            output = new string[input.Length];
+            for (int i = 0; i < input.Length; i++)
+            {
+                output[i] = RunAndGetOutput(exeFileName, input[i]);
+            }
+            return true;
+        }
+
+        private static string RunAndGetOutput(string exeFileName, string parameter)
+        {
+            string output;
+            using (Process process = new Process())
+            {
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardInput = true;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.CreateNoWindow = true;
+                process.StartInfo.FileName = exeFileName;
+                process.StartInfo.WorkingDirectory = ".";
+                process.Start();
+                string[] inputLines = parameter.Split('\n');
+                foreach (string t in inputLines)
+                {
+                    process.StandardInput.WriteLine(t);
+                }
+                process.WaitForExit();
+                output = process.StandardOutput.ReadToEnd();
+            }
+            return output;
+        }
+
+        private static List<string> GetProgramLines()
+        {
+            List<string> lines = new List<string> {String.Empty};
 
             string endCode = "compile";
-            Console.WriteLine("When you're done with the program, type {0} on the last line.", endCode);
+            Console.WriteLine("You're writing directly in the Main() method. When you're done with the program, type {0} on the last line.\n", endCode);
 
-            string line = Console.ReadLine();
+            /*string line = Console.ReadLine();
 
             while (line != endCode)
             {
-                code.Add(line);
+                lines.Add(line);
                 line = Console.ReadLine();
-            }
+            }*/
+            //string line = String.Empty;
+            int currLine = 0, initialY = Console.CursorTop;
+            List<int> previousLinesX = new List<int>();
 
-            CompileAndRun(code, "Boss Nakov", libraries);
+            while (true)
+            {
+                var key = Console.ReadKey(true);
+                //if (onSpace == true && key.KeyChar == ' ') continue;
+                if (key.KeyChar != '\r' &&
+                    key.KeyChar != '\b' &&
+                    key.Key.ToString() != "LeftArrow" &&
+                    key.Key.ToString() != "RightArrow" &&
+                    key.Key.ToString() != "Home" &&
+                    key.Key.ToString() != "End" )
+                {
+                    Console.Write(key.KeyChar);
+                    lines[currLine] += key.KeyChar;
+                }
+                //Console.WriteLine(key.Key.ToString());
+                if (key.Key.ToString().Length == 1 && key.Key.ToString()[0] >= 'A' && key.Key.ToString()[0] <= 'Z')
+                {
+                    /*if (onSpace == true) word = key.KeyChar.ToString();
+                    else word += key.KeyChar;
+                    onSpace = false;*/
+                }
+                else
+                {
+
+                    switch (key.Key.ToString())
+                    {
+                        case "Spacebar":
+                            //onSpace = true;
+
+                            /*if (Resources.KeywordsContain(word))
+                            {
+                                Console.Write(new string('\b', word.Length + 1));
+                                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                                Console.Write(word + " ");
+                                Console.ResetColor();
+                            }
+                            */
+                            break;
+
+                        case "Backspace":
+                            /*if (onSpace) onSpace = false;
+                            else word = word.Substring(0, word.Length - 1);*/
+
+                            if (Console.CursorLeft == 0)
+                            {
+                                if (currLine != 0)
+                                {
+                                    currLine--;
+                                    Console.SetCursorPosition(previousLinesX[currLine], initialY + currLine);
+                                }
+                            }
+                            else
+                            {
+                                lines[currLine] = lines[currLine].Substring(0,lines[currLine].Length - 1);
+                            Console.Write("\b \b");
+                                
+                            }
+                            break;
+
+                        case "Enter":
+                            //if(onSpace) Console.Write('\b');
+                            if (lines.Last() == endCode)
+                            {
+                                return lines.Where(l => l != lines.Last()).ToList();
+                            }
+                            //onSpace = true;
+                            FormatLine(lines[currLine]);
+                            currLine++;
+                            if(lines.Count < currLine+1)
+                                lines.Add(String.Empty);
+                            previousLinesX.Add(Console.CursorLeft);
+                            Console.WriteLine();
+                            break;
+                    }
+                }
+            }
         }
 
-        private static bool CompileAndRun(List<string> sourceFile, string parameters, string[] libraries)
+        private static void FormatLine(string line)
         {
-            bool result = CompileCode(sourceFile, "program.exe", libraries);
-            if (result) Process.Start("program.exe", parameters);
-            return result;
+            Console.BackgroundColor = ConsoleColor.Red;
+            //Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write("\r"+line);
+            Thread.Sleep(100);
+            Console.ResetColor();
+            Console.Write("\r");
+
+            string word = String.Empty;
+            bool atWord = false;
+
+            for (int i = 0; i < line.Length; i++)
+            {
+                Console.Write(line[i]);
+                if (line[i] >= 'a' && line[i] <= 'z')
+                {
+                    if (!atWord)
+                    {
+                        atWord = true;
+                        word = line[i].ToString();
+                    }
+                    else
+                    {
+                        word += line[i];
+                    }
+                }
+                else
+                {
+                    if (atWord)
+                    {
+                        char lastChar = line[i];
+                        if (Resources.KeywordsContain(word))
+                        {
+                            Console.Write(new string('\b', word.Length + 1));
+                            Console.ForegroundColor = ConsoleColor.DarkCyan;
+                            Console.Write(word + lastChar.ToString());
+                            Console.ResetColor();
+                        }
+                        atWord = false;
+                    }
+                }
+            }
         }
 
         private static bool CompileCode(List<string> sourceFile, String exeFile, string[] libraries)
@@ -59,8 +219,8 @@ namespace Main
             {
                 cp.MainClass = "ProblemNamespace.ProblemClass";
             }
-            if(libraries != null)
-                codeLines.AddRange(libraries.Select(l => "using "+l+";"));
+            if (libraries != null)
+                codeLines.AddRange(libraries.Select(l => "using " + l + ";"));
             codeLines.AddRange(new[]
             {
                 "using System;\n",
@@ -74,7 +234,7 @@ namespace Main
             codeLines.AddRange(sourceFile);
             codeLines.AddRange(new[]
             {
-                "Console.ReadKey();\n",
+                //"Console.ReadKey();\n",
                 "}\n",
                 "}\n",
                 "}\n"

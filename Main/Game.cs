@@ -13,7 +13,7 @@ namespace Main
     {
         private static List<Player> Players = new List<Player>();
 
-        static Game()
+        public static void StartGame()
         {
             StartScreen();
             InitGame();
@@ -29,12 +29,12 @@ namespace Main
 
         private static void InitGame()
         {
-            Console.WriteLine("Number of players: ");
+            Console.Write("Number of players: ");
             int numberOfPlayers = Int32.Parse(Console.ReadLine());
 
             for (int i = 0; i < numberOfPlayers; i++)
             {
-                Console.WriteLine("Enter player name:");
+                Console.Write("Enter player name: ");
                 Players.Add(new Player(Console.ReadLine()));
             }
         }
@@ -50,17 +50,25 @@ namespace Main
 
             var player = Players[0];
 
-            foreach (Boss boss in player.Bosses)
+            for (int level = 1; level <= 5; level++)
             {
+                Boss boss = player.GetCurrentBoss();
                 if (boss.Name != "Nakov")
                 {
                     Console.WriteLine("{0} suddenly steps in front of you, blocking your way.", boss.Name);
-                    Console.WriteLine("{0}: The way is shut, stranger! If you want passage you must complete the following task:", boss.Name);
-                    Reader.PrintMission(boss.Mission);
-                    Console.WriteLine("{0}: Write your code, and on the last line enter the command \"compile\".", boss.Name);
-                    Console.WriteLine("{0}: If you succeed, I'll grant you passage and the knowledge of {1}.", boss.Name, boss.Award);
+                    Console.WriteLine(
+                        "{0}: The way is shut, stranger! If you want passage you must complete the following task.",
+                        boss.Name);
+                    Console.WriteLine("{0}: If you succeed, I'll grant you passage and the knowledge of {1}.\n", boss.Name,
+                        boss.Award);
 
-                    if (player.MissionSuccess(boss.Mission))
+                    bool? completedSuccessfully = player.CompleteMission();
+                    if (completedSuccessfully == null)
+                    {
+                        //Compilation failed
+                        throw new NotImplementedException();
+                    }
+                    else if (completedSuccessfully == true)
                     {
                         Console.WriteLine("{0}: Well done, lad! Here's your promised award! Go on!", boss.Name);
                         Console.WriteLine("You now possess the knowledge of {0}", boss.Award);
@@ -68,26 +76,35 @@ namespace Main
                     }
                     else
                     {
-                        Console.WriteLine("{0}: Your answer is incorrect! I'll let you go further, but do you consider yourself worthy?", boss.Name);
+                        Console.WriteLine(
+                            "{0}: Your answer is incorrect! I'll let you go further, but do you consider yourself worthy?",
+                            boss.Name);
                     }
                 }
                 else
                 {
-                    Console.WriteLine("As you step carefully along the road, a dreadful, hideous creature arises from the shadows.");
+                    Console.WriteLine(
+                        "As you step carefully along the road, a dreadful, hideous creature arises from the shadows.");
                     Console.WriteLine("The air grows ripe with the stench of death and misery.");
                     Console.WriteLine("Your heart starts beating wildly, pumping blood into your head.");
                     Console.WriteLine("You know it's him. There's no turning back now.");
                     Console.WriteLine("{0}: So... You think you've got what it takes. Let's find out.", boss.Name);
-                    Reader.PrintMission(boss.Mission);
-                    Console.WriteLine("{0}: Write your code, and on the last line enter the command \"compile\".", boss.Name);
 
-                    if (player.MissionSuccess(boss.Mission))
+                    bool? completedSuccessfully = player.CompleteMission();
+                    if (completedSuccessfully == null)
+                    {
+                        //Compilation failed
+                        throw new NotImplementedException();
+                    }
+                    else if (completedSuccessfully == true)
                     {
                         Console.WriteLine("{0}: Congratulations! You win!", boss.Name);
                     }
                     else
                     {
-                        Console.WriteLine("{0}: Go away, maggot! Come back when you consider yourself worthy of speaking with me!", boss.Name);
+                        Console.WriteLine(
+                            "{0}: Go away, maggot! Come back when you consider yourself worthy of speaking with me!",
+                            boss.Name);
                     }
                 }
             }
@@ -100,29 +117,36 @@ namespace Main
                 foreach (var pl in Players)
                 {
                     pl.PointsModifier = pl.DoublePoints ? 4 : 2;
-                        
-                    Console.WriteLine(pl.Name + "'s turn.");
-                    Console.WriteLine(pl.Name + "meets" + pl.Bosses[i].Name);
-                    Reader.PrintMission(pl.Bosses[i].Mission);
 
-                    if (pl.MissionSuccess(pl.Bosses[i].Mission))
+                    Boss boss = pl.GetCurrentBoss();
+
+                    Console.WriteLine(pl.Name + "'s turn.");
+                    Console.WriteLine(pl.Name + " meets " + boss.Name);
+
+                    bool? completedSuccessfully = pl.CompleteMission();
+                    if (completedSuccessfully == null)
+                    {
+                        //Compilation failed
+                        throw new NotImplementedException();
+                    }
+                    else if (completedSuccessfully == true)
                     {
                         pl.DoublePoints = false;
                         pl.Points += 5 * pl.PointsModifier;
                         if (i < 4)
                         {
-                            pl.Awards.Add(pl.Bosses[i].Award);
+                            pl.Awards.Add(boss.Award);
                         }
                     }
                     else
                     {
                         if (i == 4)
                         {
-                            Console.WriteLine(pl.Bosses[i].Name + " says: You have one more chance to prove your worth!");
+                            Console.WriteLine(boss.Name + " says: You have one more chance to prove your worth!");
                         }
                         else
                         {
-                            Console.WriteLine(pl.Bosses[i].Name + " says: again for half points or next for double?");
+                            Console.WriteLine(boss.Name + " says: again for half points or next for double?");
                             if (Console.ReadLine() == "again")
                             {
                                 pl.PointsModifier = 1;
@@ -134,13 +158,19 @@ namespace Main
                                 break;
                             }
                         }
-                        
-                            if (pl.MissionSuccess(pl.Bosses[i].Mission))
-                            {
+
+                        completedSuccessfully = pl.CompleteMission();
+                        if (completedSuccessfully == null)
+                        {
+                            //Compilation failed
+                            throw new NotImplementedException();
+                        }
+                        else if (completedSuccessfully == true)
+                        {
                                 pl.Points += 5 * pl.PointsModifier;
                                 if (i < 4)
                                 {
-                                    pl.Awards.Add(pl.Bosses[i].Award);
+                                    pl.Awards.Add(boss.Award);
                                 }
                             }
                             else

@@ -14,7 +14,7 @@ namespace Main
         public int PointsModifier { get; set; }
         public int Level { get; set; }
         public List<string> Awards { get; private set; }
-        public List<Boss> Bosses { get; private set; }
+        private Boss[] Bosses;
 
         public Player(string name)
         {
@@ -22,82 +22,79 @@ namespace Main
             Points = 0;
             Level = 1;
             Awards = new List<string>();
-            Bosses=new List<Boss>();
-            for (int i = 0; i < 5; i++)
+            Bosses = new Boss[5];
+            InitBosses();
+        }
+
+        private void InitBosses()
+        {
+            HashSet<string> names = new HashSet<string>();
+            HashSet<string> awards = new HashSet<string>();
+
+            for (int level = 1; level <= 5; level++)
             {
-               Bosses.Add(new Boss("",i+1,""));
-            }
-            GenerateBosses();
-        }
-
-        public void GenerateBosses()
-        {
-
-            HashSet<string>names=new HashSet<string>();
-            HashSet<string>awards=new HashSet<string>();
-            string temp = String.Empty;
-            for (int i = 0; i < 5; i++)
-            {
-                if (i == 4)
+                if (level == 5)
                 {
-                    Bosses[i].Name = Resources.BossNames.Last();
+                    Bosses[level-1] = new Boss(Resources.GetFinalBoss(), level, "\"True Programmer\" title");
+                    break;
                 }
-                else
+
+                string name = Resources.GetRandomBoss();
+                while (names.Contains(name))
                 {
-                    temp = GenerateRandomName();
-                    while (names.Contains(temp))
-                    {
-                        temp = GenerateRandomName();
-                    }
-                    names.Add(temp);
-                    Bosses[i].Name = temp;
-                    temp = GenerateRandomLibrary();
-                    while (awards.Contains(temp))
-                    {
-                        temp = GenerateRandomLibrary();
-                    }
-                    awards.Add(temp);
-                    Bosses[i].Award = temp;
+                    name = Resources.GetRandomBoss();
                 }
+                names.Add(name);
+                string award = Resources.GetRandomAward();
+                while (awards.Contains(award))
+                {
+                    award = Resources.GetRandomAward();
+                }
+                awards.Add(award);
+
+                Bosses[level-1] = new Boss(name, level, award);
             }
-
-        }
-
-        public string GenerateRandomLibrary()
-        {
-            Random random=new Random();
-            int libraryIndex = random.Next(0, Resources.Libraries.Length);
-            string library = Resources.Libraries[libraryIndex];
-            return library;
-        }
-
-        public string GenerateRandomName()
-        {
-            Random random=new Random();
-            int nameIndex = random.Next(0, Resources.BossNames.Length - 1);
-            string name=Resources.BossNames[nameIndex];
-            return name;
         }
 
         public void ReceiveAward()
         {
-            Awards.Add(Bosses.Last().Award);
+            Awards.Add(Bosses[Level-1].Award);
         }
 
-        private string StartCodeCompiler(Mission mission)
+        public bool? CompleteMission()
         {
-            string[] libraries;
-            libraries = Awards.Count == 0 ? null : Awards.ToArray();
+            string fileName = GetCurrentBoss().Mission.GenerateFileName();
+            string[][] fileData = Reader.GetMissionData(fileName);
+            string missionTask = fileData[(int) MissionData.Problem][0];
+            string[] missionInput = fileData[(int)MissionData.InputData],
+                     misstionOutput = fileData[(int)MissionData.OutputData],
+                     playerOutput;
 
-            if (Reader.ReadFile("test.cs"))
-             CodeManager.StartCodeCompiler(libraries);
+            Console.WriteLine(missionTask);
+
+            bool compiledSuccessfully =
+                CodeManager.GetOutputFromCompiled(
+                Awards.ToArray(),
+                fileData[(int)MissionData.InputData],
+                out playerOutput);
+
+            if (!compiledSuccessfully) return null;
+
+            for (int i = 0; i < missionInput.Length; i++)
+            {
+                if (missionInput[i] != playerOutput[i]) return false;
+            }
+            return true;
         }
 
-        public bool MissionSuccess(Mission mission)
+        public Boss GetCurrentBoss()
         {
-            return StartCodeCompiler(mission) == Reader.ExpectedResult(mission);
+            return Bosses[Level-1];
         }
 
-
+        public void PrintCurrentMission()
+        {
+            
+        }
     }
 }
