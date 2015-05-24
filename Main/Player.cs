@@ -67,7 +67,7 @@ namespace Main
             string[][] fileData = Reader.GetMissionData(fileName);
             string missionTask = fileData[(int) MissionData.Problem][0];
             string[] missionInput = fileData[(int)MissionData.InputData],
-                     misstionOutput = fileData[(int)MissionData.OutputData],
+                     missionOutput = fileData[(int)MissionData.OutputData],
                      playerOutput;
 
             Console.WriteLine(missionTask);
@@ -82,7 +82,7 @@ namespace Main
 
             for (int i = 0; i < missionInput.Length; i++)
             {
-                if (missionInput[i] != playerOutput[i]) return false;
+                if (missionOutput[i] != playerOutput[i]) return false;
             }
             return true;
         }

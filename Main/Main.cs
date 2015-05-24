@@ -34,9 +34,9 @@ namespace Main
             Console.WriteLine(output[0]);
             Console.ReadKey();*/
 
-            //Game.StartGame();
-            string[] output;
-            CodeManager.GetOutputFromCompiled(null, new[]{"hi"}, out output);
+            Game.StartGame();
+            //string[] output;
+            //CodeManager.GetOutputFromCompiled(null, new[]{"hi"}, out output);
 
         }
 

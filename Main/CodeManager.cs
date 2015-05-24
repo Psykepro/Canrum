@@ -209,7 +209,7 @@ namespace Main
             cp.ReferencedAssemblies.Add("System.core.dll");
 
             cp.GenerateInMemory = false;
-            cp.WarningLevel = 3;
+            cp.WarningLevel = 1;
             cp.TreatWarningsAsErrors = false;
             cp.CompilerOptions = "/optimize";
 
