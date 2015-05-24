@@ -1,0 +1,29 @@
+Write a program that reads an array of strings and finds in it all sequences of equal elements (comparison should be case-sensitive).
+The input strings are given as a single line, separated by a space.
+Expected input: hi yes yes yes bye
+Expected output:
+hi
+yes yes yes
+bye
+%hi yes yes yes bye
+%hi
+yes yes yes
+bye
+%using System;
+
+class SequencesOfEqualStrings
+{
+    static void Main(string[] args)
+    {
+        string[] strings = Console.ReadLine().Split(' ');
+        for (int i = 0; i < strings.Length-1; i++)
+        {
+            Console.Write(strings[i]+" ");
+            if (strings[i] != strings[i + 1]) 
+            {
+                Console.WriteLine();
+            }
+        }
+        Console.WriteLine(strings[strings.Length-1]);
+    }
+}
