@@ -1,0 +1,18 @@
+using System;
+
+class SequencesOfEqualStrings
+{
+    static void Main(string[] args)
+    {
+        string[] strings = Console.ReadLine().Split(' ');
+        for (int i = 0; i < strings.Length-1; i++)
+        {
+            Console.Write(strings[i]+" ");
+            if (strings[i] != strings[i + 1]) 
+            {
+                Console.WriteLine();
+            }
+        }
+        Console.WriteLine(strings[strings.Length-1]);
+    }
+}

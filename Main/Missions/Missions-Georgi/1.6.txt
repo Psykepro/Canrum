@@ -1,0 +1,7 @@
+Write a program that reads the radius r of a circle and prints the area formatted with 2 digits after the decimal point
+Expected input:2
+Expected output:12.57
+§
+2
+§
+12.57
