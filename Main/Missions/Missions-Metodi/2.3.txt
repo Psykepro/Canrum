@@ -1,0 +1,18 @@
+We use the following 9 digits%
+0	-!
+1	**
+2	!!!
+3	&&
+4	&-
+5	!-
+6	*!!!
+7	&*!
+8	!!**!-
+We write the numbers as sequences digits from our 9 available digits given above.% The last digit of the number
+ (the most right one) has a value as shown in the above table.% The next digit on the left has a value 9 times bigger
+ than the shown in the above table, the next digit on the left has 9*9 times bigger value than the shown in the table
+ and so on.% Your task is to write a program to convert a 9Gag-style number into its corresponding decimal representation.%
+§
+***!!!
+§
+15

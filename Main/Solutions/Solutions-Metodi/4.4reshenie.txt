@@ -1,0 +1,291 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+ 
+namespace CSharpBrackets
+{
+    class Program
+    {
+        static int n = int.Parse(Console.ReadLine());
+        static string symbol = Console.ReadLine();
+        static StringBuilder text = new StringBuilder();
+        static List<StringBuilder> oldLine = new List<StringBuilder>();
+        static int i = 0;
+        static int j = 0;
+        static StringBuilder result = new StringBuilder();
+        static char curChar;
+        static int symbolTimes = 0;
+        static bool openBracket = false;
+        static List<StringBuilder> line = new List<StringBuilder>();
+        static bool isString = false;
+        static bool isTextBehind = true;
+        static bool isNextLine = false;
+ 
+        static void Main(string[] args)
+        {
+            ReadInput();
+            FormatCode();
+            PrintResult();
+            //foreach (var item in line)
+            //{
+            //    Console.WriteLine(item);
+            //}
+        }
+ 
+ 
+        static void PrintResult()
+        {
+            string[] res = result.ToString().Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+ 
+            bool isTruee = true;
+            for (int j = 0; j < res.Length; j++)
+            {
+                if (isTruee)
+                {
+                    while (res[j][0] == '\n')
+                    {
+                        res[j] = res[j].Remove(0, 1);
+                    }
+                }
+ 
+                isTruee = false;
+                res[j] = res[j].ToString().TrimEnd();
+            }
+            result = new StringBuilder();
+            for (int j = 0; j < res.Length; j++)
+            {
+ 
+                bool isTrue = false;
+                bool remove = true;
+                for (int i = 0; i < res[j].Length; i++)
+                {
+                    if (!symbol.Contains(res[j][i]) && res[j][i] != ' ' && res[j][i] != '\n' && res[j][i] != '\r')
+                    {
+                        remove = false;
+                    }
+                }
+ 
+                if (remove == true)
+                {
+                    isTrue = true;
+                }
+                if (res[j].ToString() == "")
+                {
+                    isTrue = true;
+                }
+                for (int i = 0; i < res[j].Length; i++)
+                {
+ 
+                    if (res[j][0] != symbol[0])
+                    {
+                        break;
+                    }
+                    if (!symbol.Contains(res[j][i]) && res[j][i] != ' ')
+                    {
+                        break;
+                    }
+                    if (res[j][i] == ' ')
+                    {
+                        res[j] = res[j].Remove(i, 1);
+                        break;
+                    }
+                }
+                if (!isTrue)
+                {
+                    if (j < res.Length - 1)
+                    {
+                        result.AppendLine(res[j]);
+                    }
+                    else
+                    {
+                        result.Append(res[j]);
+                    }
+                }
+ 
+            }
+ 
+            if (result[result.Length - 1] == '}' && result[result.Length - 4] == '}' && result[result.Length - 5] == '\n')
+            {
+                result = result.Remove(result.Length - 4, 3);
+            }
+            Console.WriteLine(result);
+        }
+        static void FormatCode()
+        {
+            for (i = 0; i < line.Count; i++)
+            {
+                if (i == 1)
+                {
+                    int opa = 5;
+                }
+                RemoveEmptySpaces();
+                result.AppendLine();
+                for (j = 0; j < line[i].Length; j++)
+                {
+                    bool isUsed = true;
+                    curChar = line[i][j];
+ 
+                    if (openBracket)
+                    {
+                        bool isTrue = true;
+                        while (j < line[i].Length && line[i][j] != '{' && line[i][j] != '}')
+                        {
+                            if (isTrue)
+                            {
+                                PrintSymbol();
+                                isTrue = false;
+                            }
+                            result.Append(line[i][j]);
+                            j++;
+                        }
+                    }
+                    if (j >= line[i].Length)
+                    {
+                        continue;
+                    }
+                    curChar = line[i][j];
+ 
+                    if (curChar == '{')
+                    {
+                        CheckForBracket();
+                    }
+                    if (isNextLine && curChar == '}')
+                    {
+                        isTextBehind = false;
+                        WriteSecondBracket();
+                        isUsed = false;
+                    }
+ 
+                    if (curChar == '}' && isUsed)
+                    {
+                        WriteSecondBracket();
+                    }
+ 
+                    if (openBracket && j >= line[i].Length - 1 && line[i][j] != '{')
+                    {
+                        isNextLine = true;
+                        break;
+                    }
+ 
+                    else if (openBracket && j < line[i].Length - 1)
+                    {
+                        if (line[i][j + 1] == '}')
+                        {
+                            isTextBehind = false;
+                        }
+                    }
+ 
+                    if (line[i][j] != '}' && line[i][j] != '{')
+                    {
+                        result.Append(line[i][j]);
+                    }
+ 
+                }
+                result.AppendLine();
+                PrintSymbol();
+            }
+        }
+ 
+        static void WriteSecondBracket()
+        {
+            symbolTimes--;
+            result.AppendLine();
+            PrintSymbol();
+            result.Append('}');
+            result.AppendLine();
+ 
+        }
+ 
+        static void RemoveEmptySpaces()
+        {
+            for (int h = 0; h < oldLine[i].Length; h++)
+            {
+                if (oldLine[i][h] == '\"' && !isString)
+                {
+                    line[i].Append(oldLine[i][h]);
+                    h++;
+                    isString = true;
+                    if (h == line[i].Length - 1)
+                    {
+                        continue;
+                    }
+                }
+                if (oldLine[i][h] == '\"' && isString)
+                {
+                    line[i].Append(oldLine[i][h]);
+                    h++;
+                    isString = false;
+                    if (h == line[i].Length - 1)
+                    {
+                        continue;
+                    }
+                }
+                if (h == 0 && oldLine[i][h] == ' ')
+                {
+                    line[i].Append(oldLine[i][h]);
+                    h++;
+                    while (oldLine[i][h] == ' ')
+                    {
+                        h++;
+                    }
+                }
+                else if (oldLine[i][h] == ' ' && !isString)
+                {
+                    line[i].Append(oldLine[i][h]);
+                    h++;
+                    while (oldLine[i][h] == ' ')
+                    {
+                        h++;
+                    }
+                }
+                line[i].Append(oldLine[i][h]);
+            }
+        }
+ 
+        static void PrintSymbol()
+        {
+            for (int i = 0; i < symbolTimes; i++)
+            {
+                result.Append(symbol);
+            }
+        }
+ 
+        static void CheckForBracket()
+        {
+            if (j == 0)
+            {
+                PrintSymbol();
+                result.AppendLine("{");
+            }
+            else
+            {
+                result.AppendLine();
+                PrintSymbol();
+                result.AppendLine("{");
+            }
+            symbolTimes++;
+            openBracket = true;
+ 
+            //for (int i = 0; i < symbolTimes; i++)
+            //{
+            //    result.Append(symbol);
+            //}
+        }
+ 
+        static void ReadInput()
+        {
+            for (int g = 0; g < n; g++)
+            {
+                string lines = Console.ReadLine().Trim();
+ 
+                if (lines != "")
+                {
+                    oldLine.Add(new StringBuilder(lines));
+                    line.Add(new StringBuilder());
+                }
+            }
+        }
+    }
+}

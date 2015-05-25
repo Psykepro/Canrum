@@ -1,0 +1,37 @@
+Doge is a very popular dog. Not very smart, but so cute and popular.% He is very hungry and needs your help.% Since he is
+ popular he has many enemies.%
+Doge and his food (bone) are placed on a grid consisting of NxM cells (N vertical cells, numbered from 0 to N-1 and M
+ horizontal cells, numbered from 0 to M-1).% Doge is always placed on location [0; 0] and his food is placed on location 
+[Fx; Fy]
+(0 <= Fx <= N-1; 0 <= Fy <= M-1).%
+Doge has K enemies. Each enemy is placed on the grid.% Two enemies may be on the same location. There will not be an 
+enemy on location [0; 0] (where Doge is) and there will not be an enemy on location [Fx; Fy] (where the food is).
+Doge is allowed only to move in two directions (right and down) and is not allowed to step on locations where his 
+enemies are.%
+Count and return the number of all possible ways for the Doge to go from his start location to the food.% If there is
+ no way for the Doge to go from his start position to the food, return 0. Wow.
+Input
+The input data should be read from the console.%
+On the first line there will be the numbers N and M, separated by a single space.%
+On the second line there will be the integer numbers Fx and Fy, separated by a single space.%
+On the third line there will be the number K – the number of Doge`s enemies.%
+On the next K lines there will be the X and Y coordinates for each Doge`s enemy, separated by a space.
+The input data will always be valid and in the format described. There is no need to check it explicitly.%
+Output
+The output should be printed on the console.%
+Output the number of all possible ways for the Doge to go from his initial position to the food.%
+Constraints
+•	The numbers N and M will be a non-negative integers between 1 and 500, inclusive.%
+•	The number K will be a non-negative integer between 0 and 10000.%
+•	Allowed working time for your program: 0.25 seconds. Allowed memory: 64 MB.%
+•	Wow.%
+§
+10 12
+8 8
+4
+1 2
+7 3
+8 7
+3 5
+§
+2654

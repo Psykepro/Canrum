@@ -1,0 +1,23 @@
+We use the following 168 digits:
+A	B	C	…	Z
+0	1	2	…	25
+…
+?A	?B	?C	…	?Z
+26	27	28	…	51
+…
+bA	bB	bC	…	bZ
+52	53	54	…	77
+…
+fA	…	fJ	fK	fL
+156	…	165	166	167
+We write the numbers as sequences of digits.% The last digit of the number (the most right one) has a value as shown in
+ the
+ above table.% The next digit on the left has a value 168 times bigger than the shown in the above table, the next digit
+ on
+ the left has 168*168 times bigger value than the shown in the table and so on.% Your task is to write a program to
+ convert
+ a Durankulak-style number into its corresponding decimal representation.%
+§
+BaG
+§
+200

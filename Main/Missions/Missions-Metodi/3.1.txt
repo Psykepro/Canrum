@@ -1,0 +1,20 @@
+You are given a matrix of numbers.% By given the pattern below, find the pattern with maximal sum:%
+The pattern consists of neighbor cells in the matrix.% The numbers in the cells must be consecutive, i.e.% the following 
+rules must be always valid:%
+A = B -1, B = C – 1, C = D – 1, D = F – 1, F = E – 1, E = G - 1
+The size of the pattern is constant and always has the given form.%
+Example:%
+The patterns here are marks with green, blue and yellow colors:%
+•	The green pattern has a sum of its numbers 35
+•	The blue pattern has a sum of its numbers 56
+•	The yellow pattern has a sum of its numbers -14
+The winning pattern is the blue with maximal sum of 56
+§
+5
+1 2 3 4 5
+2 3 4 5 6
+3 4 5 6 7
+4 5 6 7 8
+5 6 7 8 9  
+§
+YES 42

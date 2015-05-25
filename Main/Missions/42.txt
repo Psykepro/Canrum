@@ -1,7 +1,0 @@
-At long last scientist found out that the cats have an evil plan to enslave all of humanity. The sinister organization Al cat-qaeda have been targeting high profile programmers and taking them down (a.k.a brutally murdering them), because they are the only ones that can ruin their plans.
-“But why programmers?” you would ask, because they are the only ones that can write a program to crack their communication codes. They are using a 23-based numeral system in order to fool everyone that they are stupid and harmless beings. The digits go as following:
-a	b	c	d	…	j	k	…	w
-0	1	2	3	…	9	10	…	22
-
-Your task is to help the global programmer community. You will receive a set on letter-numbers (strings) on one line separated with a single space ‘ ‘. Sum all of the letter-numbers and print out the resulting sum both in the 23-based system and decimal system as shown in the examples.
-% mia % mia = 6532

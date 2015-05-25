@@ -1,0 +1,20 @@
+using System;
+class Program
+{
+    static void Main()
+    {
+        int m = Int32.Parse(Console.ReadLine());
+        string input = Console.ReadLine().ToLower();
+        long result = 0;
+        for (int i = 0; i < input.Length; i++)
+        {
+            if (input[i] == '@')
+            {
+                Console.WriteLine(result); return;
+            }
+            else if (input[i] >= '0' && input[i] <= '9') result *= input[i] - '0';
+            else if (input[i] >= 'a' && input[i] <= 'z') result += input[i] - 'a';
+            else result %= m;
+        }
+    }
+}

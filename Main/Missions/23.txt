@@ -1,4 +1,0 @@
-You are given 3 numbers write a program and find:
-•	The biggest number among them
-•	The smallest number among them
-•	The arithmetic mean of the three numbers%1 2 3%3 1 2.00

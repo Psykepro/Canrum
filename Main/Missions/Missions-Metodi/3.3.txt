@@ -1,0 +1,18 @@
+You are given a text and a number.% The text can contain any characters:% (digits, Latin letters (both capital and letter
+ case) or any other symbols). The character '@' is special – it marks the end of the text.% 
+Your task is to iterate the text and to perform an operation for every character.% Having a RESULT = 0, the operations
+ are as follows:%
+•	If the current character is '@', stop the program and print the value of RESULT
+•	If the current character is a digit (‘0’ – ‘9’), then multiply the RESULT by this digit
+•	If the current character is a letter, add its index from the Latin alphabet to RESULT.% 
+o	'A' has an index 0, ‘B’ has an index 1, etc…%
+•	If the current character is a symbol, that is different from the ones described above, create module of the 
+RESULT
+ by the provided number (M)
+•	See the sample input/output for more detailed explanation
+§
+2001
+Hello .NET 5! My name is Peter 8-)@
+§
+518
+

@@ -1,0 +1,95 @@
+using System;
+using System.Collections.Generic;
+ 
+class OneTaskNotEnough
+{
+    static void CalculatingLamps(List<int> lampCollection, int step)
+    {
+        int number = 0;
+        if (lampCollection.Count == 1)
+        {
+            number = lampCollection[0];
+            Console.WriteLine(number);
+ 
+        }
+ 
+        List<int> newCollection = new List<int>();
+        if (lampCollection.Count > 1)
+        {
+            for (int i = 0; i < lampCollection.Count; i++)
+            {
+                if (i % step == 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    newCollection.Add(lampCollection[i]);
+                }
+ 
+            }            
+            CalculatingLamps(newCollection, step + 1);
+        }      
+ 
+    }
+ 
+ 
+    static void CheckForBounding(string inputRoute)
+    {
+        int counterLs = 0;
+        int counterRs = 0;
+        foreach (char letter in inputRoute)
+        {
+            if (letter == 'L')
+            {
+                counterLs++;
+            }
+            if (letter == 'R')
+            {
+                counterRs++;
+            }
+        }
+ 
+        if (counterLs == counterRs)
+        {
+            Console.WriteLine("unbounded");
+        }
+        else
+        {
+            Console.WriteLine("bounded");
+        }
+    }
+ 
+    static void Main()
+    {
+ 
+        // first part
+        int lamps = int.Parse(Console.ReadLine()); //12;
+        //DateTime start = DateTime.Now;
+        List<int> lampCollection = new List<int>();
+        int counter = 2;
+        for (int i = 2; i <= lamps; i = i + 2)
+        {
+            counter++;
+            if (counter == 3)
+            {
+                counter = 0;
+                continue;
+            }
+            lampCollection.Add(i);
+        }
+        int step = 4;
+        CalculatingLamps(lampCollection, step);
+ 
+        //TimeSpan duration = DateTime.Now - start;
+        //Console.WriteLine("That took " + duration.TotalMilliseconds + " ms");
+ 
+        // second part
+        string inputRouteOne = Console.ReadLine().ToUpper();        // "L".ToUpper();
+        CheckForBounding(inputRouteOne);
+        string inputRouteTwo = Console.ReadLine().ToUpper();        //"SRSL".ToUpper();
+        CheckForBounding(inputRouteTwo);
+ 
+       
+    }
+}

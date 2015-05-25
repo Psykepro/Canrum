@@ -1,0 +1,22 @@
+Everyone knows that the second most important thing in the programmer’s life is to write code, but the most important
+ thing is to drink beer.% Mitko and Vladko are very famous programmers.% In the XIX world computer programming contest
+ they faced each other.% The contest consists of exactly N rounds.% In each round both competitors must drink beer.%
+ Mitko and Vladko are very good programmers and that’s why they drink really a lot of beer.% The judges are drunk too 
+and can’t count how much beer is drunken by each competitor and determine the better programmer.%
+Mitko and Vladko decide to help the judges by giving them for each round an integer number called drunken number.%
+ The drunken number consists of no more than nine significant digits.% The sum of the left digits of drunken number
+ represents drunken beers by Mitko and the sum of the right digits of drunken number represents drunken beers by Vladko.%
+ For example number 1234 means that Mitko drank 1 + 2 = 3 beers and Vladko 3 + 4 = 7 beers. If the drunken number consists
+ of odd number of digits, the middle digit is shared between both competitors.% For example number 123 means that Mitko
+ drank 1 + 2 = 3 beers and Vladko 2 + 3 = 5 beers. Drunken number’s leading zeros aren’t significant and should be ignored (e.g. 00789 must be processed as 789).
+Drunken beers from each round are summed.% The winner in the competition is the one who drank more beers.% If both drank
+ the same number of beers there is no winner.% 
+Your task is to write a program that computes and compares all drunken beers by both competitors and help judges to
+ determine who the better programmer is.%The output data should be printed on the console.%
+On the only output line your program should print the first letter of the winner’s name (“M” for Mitko and “V” for Vladko)
+ and a space followed by a number representing how much more beers the winner has drank. If there is no winner print “No” 
+followed by a space and the total drunken beers.%
+§
+1235797122
+§
+M 5

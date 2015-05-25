@@ -1,0 +1,27 @@
+Doge is a very popular dog.% He is so popular that there is a crypto currency named after him.% The crypto currency is
+ named DogeCoin. Doge loves his DogeCoins and wants to gather as much as he can.% Help this cute little animal.%
+Doge and the DogeCoins are placed on a grid consisting of NxM cells (N vertical cells, numbered from 0 to N-1 and M
+ horizontal cells, numbered from 0 to M-1).% Doge is always placed on location [0; 0].% Doge is allowed only to move in 
+two directions (right and down).%
+There are K coins on the grid.% Two or more coins may be on the same location. There also might be a coin(s) where Doge 
+starts (0, 0) and he automatically gathers them.%
+Find the biggest possible amount of coins that Doge can gather when moving only down and right.%
+Output
+The output should be printed on the console.%
+Output the biggest possible amount of coins that Doge can gather when moving only down and right.%
+§
+10 10
+11
+0 0
+1 1
+2 2
+3 3
+4 4
+5 5
+6 6
+7 7
+8 8
+8 9
+9 9
+§
+11

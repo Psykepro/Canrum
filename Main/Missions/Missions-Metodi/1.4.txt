@@ -1,0 +1,9 @@
+The astrological digit of a given number N is a digit calculated by the number's digits by a special algorithm%The 
+algorithm performs the following steps:%
+(1)	Sums the digits of the number N and stores the result back in N.
+(2)	If the obtained result is bigger than 9, step (1) is repeated, otherwise the algorithm finishes.%
+The last obtained value of N is the result, calculated by the algorithm.%
+§
+-1337
+§
+5

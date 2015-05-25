@@ -1,0 +1,32 @@
+class GagNumbers
+    {
+        static void Main()
+        {
+            string[] digits = { "-!", "**", "!!!", "&&", "&-", "!-", "*!!!", "&*!", "!!**!-" };
+            string str = Console.ReadLine();
+            List<int> gags = new List<int>();
+            StringBuilder builder = new StringBuilder();
+            string comp = "";
+            int sum = 0;
+            for (int i = 0; i < str.Length; i++)
+            {
+                builder.Append(str[i]);
+                comp = builder.ToString();
+                for (int j = 0; j < digits.Length; j++)
+                {
+                    if (comp == digits[j])
+                    {
+                        gags.Add(j);
+                        comp = "";
+                        builder.Clear();
+                    }
+                }
+            }
+            gags.Reverse();
+            for (int c = 0; c < gags.Count; c++)
+            {
+                sum = sum + (gags[c] * (int)Math.Pow(9, c));
+            }
+            Console.Write(sum);          
+        }
+    }

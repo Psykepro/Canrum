@@ -1,0 +1,29 @@
+The largest planet in the known universe is TRES4.% It is located in the constellation Hercules.% For some strange 
+coincidence the TRES4nians (the creatures that live on TRES4) use some of the letters in the Latin alphabet in their 
+numeral system.% What is even more surprising the digits in this numeral system, called TRESNUM4, also contain some 
+operators that we use in programming here on Earth. All digits in TRESNUM4 with their decimal representations are:%
+LON+	0
+VK-	1
+*ACAD	2
+^MIM	3
+ERIK|	4
+SEY&	5
+EMY>>	6
+/TEL	7
+<<DON	8
+A long time ago, Christopher, an eleven years old kid from Arizona, USA, who was extremely good at physics and astronomy,
+ sent a message with the integer coordinates of the Sun and the Earth to the constellation Hercules.% Earlier today the 
+message has been received by the TRES4nians. The problem is they don’t know how to convert numbers from decimal numeral system to numbers in TRESNUM4 numeral system and you, like the wisest TRES4nian, must help them by writing a computer program.
+Input
+The input data consists of a single line – the integer number sent to the TRES4 planet.%
+The input data will always be valid and in the described format. There is no need to check it explicitly.%
+Output
+The output data consists of a single line holding the TRESNUM4 number representation of the integer number.%
+Constraints
+•	The input number will be between 0 and 18 000 000 000 000 000 000.%
+•	Allowed working time for your program: 0.1 seconds.%
+•	Allowed memory: 16 MB.%
+§
+4
+§
+ERIK|

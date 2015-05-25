@@ -1,0 +1,33 @@
+Look at this sad cat%. She and her cat friends have cat concert tommorow evening.% They need your help!
+Each cat knows some songs (don’t ask what are their songs like… mostly mew mew mew mew…)
+There are C cats (numbered from 1 to C) and S songs (numbered from 1 to S).%
+You are given the songs each cat knows.%
+They are very very lazy cats so help them to find the minimal number of songs that cats must sing in the concert so
+ that every cat will sing at least one song. If no solution is available print “No concert!”. View the examples for clarification.
+Input
+The input data should be read from the console.%
+On the first line there will be the string “C cats” where C is the number of cats.%
+On the second line there will be the string “S songs” where S is the number of songs.%
+On each of the next lines (except the last one) there will be a string in format “Cat X knows song Y” which means that 
+cat with number X knows the song with number Y.%
+On the last input line there will be the string “Mew!”
+The input data will always be valid and in the format described.% There is no need to check it explicitly.%
+Output
+The output data should be printed on the console.
+On the only output line print the minimal number of songs that cats must sing in the concert so that every cat will sing 
+at least one song.% If no solution is available print “No concert!”.%
+Constraints
+? C will be an integer number between 1 and 30, inclusive.%
+? S will be an integer number between 1 and 10, inclusive.%
+? Allowed working time for your program: 0.1 seconds.%
+? Allowed memory: 16 MB.%
+§
+3 cats
+2 songs
+Cat 2 knows song 2
+Cat 1 knows song 1
+Cat 3 knows song 1
+Cat 2 knows song 1
+Mew!
+§
+1
