@@ -32,7 +32,7 @@ namespace Main
             string[] files = Directory.GetFiles(defaultDir);
             files = files.Select(f => f.Split('\\').Last()).ToArray();
             int filesCount = files.Count(f => f[0] == '0'+Level);
-            string fileName = String.Format("{0}\\{1}{2}.txt", defaultDir, Level, (new Random().Next(1, filesCount + 1)));
+            string fileName = String.Format("{0}\\{1}.{2}.txt", defaultDir, Level, (new Random().Next(1, filesCount + 1)));
             return fileName;
         }
     }

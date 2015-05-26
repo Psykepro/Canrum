@@ -1,0 +1,8 @@
+Write a program that enters 5 numbers (given in a single line, separated by a space), calculates and prints their sum.
+Expected input: 1 2 3 4 5
+Expected output: 15
+§
+1 2 3 4 5
+§
+15
+
