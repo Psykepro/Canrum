@@ -1,20 +1,15 @@
 using System;
-using System.Text;
 
 class Program
 {
-    static string ConvertToUnicode(string str)
-    {
-        StringBuilder utf = new StringBuilder(str.Length * 6);
-
-        foreach (char c in str)
-            utf.AppendFormat("\\u{0:X4}", (int)c);
-
-        return utf.ToString();
-    }
-
     static void Main()
     {
-        Console.WriteLine(ConvertToUnicode("Hi!"));
+        string str = Console.ReadLine();
+        string utf = String.Empty;
+
+        for (int i = 0; i < str.Length; i++)
+            utf += String.Format("\\u{0:X4}", (int)str[i]);
+
+        Console.WriteLine(utf);
     }
 }

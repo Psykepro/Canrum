@@ -1,0 +1,48 @@
+using System;
+class MaximalSum
+{
+    static void Main(string[] args)
+    {   
+        string[] rowsAndCols = Console.ReadLine().Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+        int rowsNumber = int.Parse(rowsAndCols[0]);
+        int colsNumber= int.Parse(rowsAndCols[1]);
+        int[,] matrix = new int[rowsNumber, colsNumber];
+ 
+        for (int row = 0; row < rowsNumber; row++)
+        {
+            string[] rowMemberValues = Console.ReadLine().Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+            for (int col = 0; col <colsNumber; col++)
+            {
+                matrix[row, col] = int.Parse(rowMemberValues[col]);
+            }
+        }
+        int bestSum = int.MinValue;
+        int bestSumRowIndex=0;
+        int bestSumColIndex=0;
+        for (int row = 0; row < rowsNumber-2; row++)
+        {
+            for (int col = 0; col < colsNumber-2; col++)
+            {
+                int sum = matrix[row, col] + matrix[row, col + 1] + matrix[row, col + 2] +
+                    matrix[row + 1, col] + matrix[row + 1, col + 1] + matrix[row + 1, col + 2] +
+                    matrix[row + 2, col] + matrix[row + 2, col + 1] + matrix[row + 2, col + 2];
+                if (sum > bestSum) 
+                {
+                    bestSum = sum;
+                    bestSumRowIndex = row;
+                    bestSumColIndex = col;
+                }
+            }
+        }
+        Console.WriteLine("Sum = {0}",bestSum);
+        for (int row = 0; row < 3; row++)
+        {
+            for (int col = 0; col < 3; col++)
+            {
+                Console.Write("{0}", matrix[bestSumRowIndex+row, bestSumColIndex+col]);
+                if(col != 2) Console.Write(" ");
+            }
+            Console.WriteLine();
+        }
+    }
+}
