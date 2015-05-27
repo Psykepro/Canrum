@@ -11,10 +11,10 @@ namespace Main
             "System.Globalization",
             "System.IO",
             "System.Linq",
-            "System.Media",
             "System.Numerics",
+            "System.Text",
             "System.Text.RegularExpressions;",
-            "System.Threading",
+            "System.Threading.Tasks",
             "System.Timers"
         };
 
