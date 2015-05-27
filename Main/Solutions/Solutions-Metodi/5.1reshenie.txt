@@ -1,95 +1,51 @@
-using System;
-using System.Collections.Generic;
- 
-class OneTaskNotEnough
+namespace DogeCoin
 {
-    static void CalculatingLamps(List<int> lampCollection, int step)
+    using System;
+
+    internal class Program
     {
-        int number = 0;
-        if (lampCollection.Count == 1)
+        private static void Main()
         {
-            number = lampCollection[0];
-            Console.WriteLine(number);
- 
-        }
- 
-        List<int> newCollection = new List<int>();
-        if (lampCollection.Count > 1)
-        {
-            for (int i = 0; i < lampCollection.Count; i++)
+            // Input
+            var line = Console.ReadLine().Split(' ');
+            int n = int.Parse(line[0]);
+            int m = int.Parse(line[1]);
+
+            var field = new int[n, m];
+
+            int k = int.Parse(Console.ReadLine());
+            for (int i = 0; i < k; i++)
             {
-                if (i % step == 0)
+                line = Console.ReadLine().Split(' ');
+                int x = int.Parse(line[0]);
+                int y = int.Parse(line[1]);
+
+                field[x, y]++;
+            }
+
+            // Solve
+            var answer = new int[n, m];
+            for (int x = 0; x < n; x++)
+            {
+                for (int y = 0; y < m; y++)
                 {
-                    continue;
+                    int up = 0, left = 0;
+                    if (x > 0)
+                    {
+                        up = answer[x - 1, y];
+                    }
+
+                    if (y > 0)
+                    {
+                        left = answer[x, y - 1];
+                    }
+
+                    answer[x, y] = Math.Max(up, left) + field[x, y];
                 }
-                else
-                {
-                    newCollection.Add(lampCollection[i]);
-                }
- 
-            }            
-            CalculatingLamps(newCollection, step + 1);
-        }      
- 
-    }
- 
- 
-    static void CheckForBounding(string inputRoute)
-    {
-        int counterLs = 0;
-        int counterRs = 0;
-        foreach (char letter in inputRoute)
-        {
-            if (letter == 'L')
-            {
-                counterLs++;
             }
-            if (letter == 'R')
-            {
-                counterRs++;
-            }
+
+            // Print answer
+            Console.WriteLine(answer[n - 1, m - 1]);
         }
- 
-        if (counterLs == counterRs)
-        {
-            Console.WriteLine("unbounded");
-        }
-        else
-        {
-            Console.WriteLine("bounded");
-        }
-    }
- 
-    static void Main()
-    {
- 
-        // first part
-        int lamps = int.Parse(Console.ReadLine()); //12;
-        //DateTime start = DateTime.Now;
-        List<int> lampCollection = new List<int>();
-        int counter = 2;
-        for (int i = 2; i <= lamps; i = i + 2)
-        {
-            counter++;
-            if (counter == 3)
-            {
-                counter = 0;
-                continue;
-            }
-            lampCollection.Add(i);
-        }
-        int step = 4;
-        CalculatingLamps(lampCollection, step);
- 
-        //TimeSpan duration = DateTime.Now - start;
-        //Console.WriteLine("That took " + duration.TotalMilliseconds + " ms");
- 
-        // second part
-        string inputRouteOne = Console.ReadLine().ToUpper();        // "L".ToUpper();
-        CheckForBounding(inputRouteOne);
-        string inputRouteTwo = Console.ReadLine().ToUpper();        //"SRSL".ToUpper();
-        CheckForBounding(inputRouteTwo);
- 
-       
     }
 }

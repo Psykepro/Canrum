@@ -3,7 +3,7 @@ class CirclePerimeterArea
 {
     static void Main(string[] args)// p*r^2
     {
-        double r = int.Parse(Console.ReadLine());
+        double r = double.Parse(Console.ReadLine());
         double area = Math.PI * r * r;
         Console.WriteLine("{0:F2}",area);
     }

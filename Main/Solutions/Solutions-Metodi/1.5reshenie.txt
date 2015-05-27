@@ -11,15 +11,15 @@ class DrunkenNumbers
         for (int round = 0; round < rounds; round++)
         {
             string drunkenNumber = Console.ReadLine();
-            StringBuilder sb = new StringBuilder();
+            string sb = string.Empty;
             for (int i = 0; i < drunkenNumber.Length; i++)
             {
                 if (drunkenNumber[i] >= '0' && drunkenNumber[i] <= '9')
                 {
-                    sb.Append(drunkenNumber[i]);
+                    sb += drunkenNumber[i];
                 }
             }
-            drunkenNumber = sb.ToString().TrimStart(new Char[] { '0' });
+            drunkenNumber = sb.TrimStart(new Char[] { '0' });
             int length = drunkenNumber.Length / 2 + drunkenNumber.Length % 2;
             for (int index = 0; index < length; index++)
             {
@@ -46,3 +46,4 @@ class DrunkenNumbers
             Console.WriteLine("No {0}", (countMitko + countVladko));
         }
     }
+}

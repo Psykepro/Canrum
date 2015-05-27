@@ -14,8 +14,8 @@ namespace Main
             "System.Numerics",
             "System.Text",
             "System.Text.RegularExpressions;",
-            "System.Threading.Tasks",
-            "System.Timers"
+            //"System.Threading.Tasks",
+            //"System.Timers"
         };
 
         private static readonly string[] BossNames =

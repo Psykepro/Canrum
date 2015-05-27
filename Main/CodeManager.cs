@@ -51,25 +51,32 @@ namespace Main
                 }
                 process.WaitForExit();
                 output = process.StandardOutput.ReadToEnd();
+                if (output.Length > 2)
+                {
+                    if (output.Last() == '\n') output = output.Substring(0, output.Length - 1);
+                    if (output.Last() == '\r') output = output.Substring(0, output.Length - 1);
+                }
             }
             return output;
         }
 
         private static List<string> GetProgramLines()
         {
-            List<string> lines = new List<string> {String.Empty};
+            List<string> lines = new List<string> { String.Empty };
 
             string endCode = "compile";
             Console.WriteLine("You're writing directly in the Main() method. When you're done with the program, type {0} on the last line.\n", endCode);
+            Console.SetBufferSize(300, 100);
+            //string line = Console.ReadLine();
 
-            /*string line = Console.ReadLine();
-
-            while (line != endCode)
+            /*while (line != endCode)
             {
                 lines.Add(line);
                 line = Console.ReadLine();
-            }*/
-            //string line = String.Empty;
+            }
+
+            return lines;*/
+            string line = String.Empty;
             int currLine = 0, initialY = Console.CursorTop;
             List<int> previousLinesX = new List<int>();
 
@@ -79,20 +86,27 @@ namespace Main
                 //if (onSpace == true && key.KeyChar == ' ') continue;
                 if (key.KeyChar != '\r' &&
                     key.KeyChar != '\b' &&
+                    key.KeyChar != '\t' &&
                     key.Key.ToString() != "LeftArrow" &&
                     key.Key.ToString() != "RightArrow" &&
                     key.Key.ToString() != "Home" &&
-                    key.Key.ToString() != "End" )
+                    key.Key.ToString() != "End")
                 {
                     Console.Write(key.KeyChar);
                     lines[currLine] += key.KeyChar;
                 }
+                else if (key.KeyChar == '\t')
+                {
+                    string tab = "    ";
+                    Console.Write(tab);
+                    lines[currLine] += tab;
+                }
                 //Console.WriteLine(key.Key.ToString());
                 if (key.Key.ToString().Length == 1 && key.Key.ToString()[0] >= 'A' && key.Key.ToString()[0] <= 'Z')
                 {
-                    /*if (onSpace == true) word = key.KeyChar.ToString();
-                    else word += key.KeyChar;
-                    onSpace = false;*/
+                    //if (onSpace == true) word = key.KeyChar.ToString();
+                    //else word += key.KeyChar;
+                    //onSpace = false;
                 }
                 else
                 {
@@ -102,33 +116,34 @@ namespace Main
                         case "Spacebar":
                             //onSpace = true;
 
-                            /*if (Resources.KeywordsContain(word))
-                            {
-                                Console.Write(new string('\b', word.Length + 1));
-                                Console.ForegroundColor = ConsoleColor.DarkCyan;
-                                Console.Write(word + " ");
-                                Console.ResetColor();
-                            }
-                            */
+                            //if (Resources.KeywordsContain(word))
+                            //{
+                            //    Console.Write(new string('\b', word.Length + 1));
+                            //    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                            //    Console.Write(word + " ");
+                            //    Console.ResetColor();
+                            //}
+                            //
                             break;
 
                         case "Backspace":
-                            /*if (onSpace) onSpace = false;
-                            else word = word.Substring(0, word.Length - 1);*/
+                            //if (onSpace) onSpace = false;
+                            //else word = word.Substring(0, word.Length - 1);
 
-                            if (Console.CursorLeft == 0)
+                          if (Console.CursorLeft == 0)
                             {
                                 if (currLine != 0)
                                 {
+                                    lines.RemoveAt(lines.Count - 1);
                                     currLine--;
                                     Console.SetCursorPosition(previousLinesX[currLine], initialY + currLine);
                                 }
                             }
                             else
                             {
-                                lines[currLine] = lines[currLine].Substring(0,lines[currLine].Length - 1);
-                            Console.Write("\b \b");
-                                
+                                lines[currLine] = lines[currLine].Substring(0, lines[currLine].Length - 1);
+                                Console.Write("\b \b");
+
                             }
                             break;
 
@@ -139,11 +154,17 @@ namespace Main
                                 return lines.Where(l => l != lines.Last()).ToList();
                             }
                             //onSpace = true;
-                            FormatLine(lines[currLine]);
-                            currLine++;
-                            if(lines.Count < currLine+1)
+                            FormatLine(lines[currLine], initialY + currLine);
+                            if (lines.Count < currLine + 2)
+                            {
                                 lines.Add(String.Empty);
-                            previousLinesX.Add(Console.CursorLeft);
+                                previousLinesX.Add(Console.CursorLeft);
+                            }
+                            else
+                            {
+                                previousLinesX[currLine] = Console.CursorLeft;
+                            }
+                            currLine++;
                             Console.WriteLine();
                             break;
                     }
@@ -151,11 +172,12 @@ namespace Main
             }
         }
 
-        private static void FormatLine(string line)
+        private static void FormatLine(string line, int positionY)
         {
             Console.BackgroundColor = ConsoleColor.Red;
             //Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write("\r"+line);
+            Console.SetCursorPosition(0, positionY);
+            Console.Write("\r" + line);
             Thread.Sleep(100);
             Console.ResetColor();
             Console.Write("\r");
@@ -187,12 +209,24 @@ namespace Main
                         {
                             Console.Write(new string('\b', word.Length + 1));
                             Console.ForegroundColor = ConsoleColor.DarkCyan;
-                            Console.Write(word + lastChar.ToString());
+                            Console.Write(word);
                             Console.ResetColor();
+                            Console.Write(lastChar.ToString());
                         }
                         atWord = false;
                     }
                 }
+            }
+            if (atWord)
+            {
+                if (Resources.KeywordsContain(word))
+                {
+                    Console.Write(new string('\b', word.Length));
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write(word);
+                    Console.ResetColor();
+                }
+                atWord = false;
             }
         }
 
