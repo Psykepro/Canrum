@@ -1,6 +1,6 @@
 |# Canrum|</br>
 |Softuni Advanced C#  TEAM "CANRUM" project repository|</br>
-|Бонев - CodeManager, allaround help and made most classes|</br>
+|Бонев - CodeManager class, allaround help and made most classes|</br>
 |Методи - задачи|</br>
 |Ники - StreamReader class|</br>
 |Гошо - задачи |</br>
