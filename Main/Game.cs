@@ -175,7 +175,7 @@ namespace Main
                     pl.PointsModifier = pl.DoublePoints ? 4 : 2;
 
                     Boss boss = pl.GetCurrentBoss();
-
+                    Console.Clear();
                     Console.WriteLine(pl.Name + "'s turn.");
                     Console.WriteLine(pl.Name + " meets " + boss.Name);
 
