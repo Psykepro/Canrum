@@ -1,8 +1,8 @@
 |# Canrum|</br>
 |Softuni Advanced C#  TEAM "CANRUM" project repository|</br>
-|Бонев - входа|</br>
-|Методи, Стоян - търсят задачи - слагайте ги в отделни файлове|</br>
+|Бонев - CodeManager, allaround help and made most classes|</br>
+|Методи - задачи|</br>
 |Ники - StreamReader class|</br>
-|Гошо - class Library - библиотеки / награда - |</br>
-|Пацо - class Bosses|</br>
-|Вики?! - class Player |</br>
+|Гошо - задачи |</br>
+|Пацо - Game class, game logic, start, end screen, others|</br>
+|Вики - задачи |</br>
