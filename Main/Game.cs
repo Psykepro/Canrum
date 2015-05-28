@@ -57,33 +57,12 @@ namespace Main
             Console.ResetColor();
             Console.WriteLine("Press the 'any' key to quit game or 'Enter' to start a new one...");
             var key = Console.ReadKey(true);
-            if (key.KeyChar == '\n')
+            if (key.Key == ConsoleKey.Enter)
             {
                 StartNewGame();
             }
 
         }
-
-        private static void PrintTextFile(string path)
-        {
-            try
-            {
-                using (StreamReader sr = new StreamReader(path))
-                {
-                    while (sr.Peek() >= 0)
-                    {
-                        Console.WriteLine(sr.ReadLine());
-                        Thread.Sleep(150);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("The process failed: {0}", e.ToString());
-            }
-            Thread.Sleep(2000);
-        }
-
 
         private static void InitGame()
         {
@@ -108,7 +87,7 @@ namespace Main
 
             var player = Players[0];
 
-            for (int level = 1; level <= 5; level++)
+        for (player.Level = 1; player.Level <= 5; player.Level++)
             {
                 Boss boss = player.GetCurrentBoss();
                 if (boss.Name != "Nakov")
@@ -126,6 +105,7 @@ namespace Main
                     }
                     else if (completedSuccessfully == true)
                     {
+                        PrintBlinkingTextFile(@"..\..\Correct.txt");
                         BossSpeaks(boss);
                         Console.WriteLine(" Well done, lad! Here's your promised award! Go on!");
                         Console.WriteLine("You now possess the knowledge of {0}", boss.Award);
@@ -133,6 +113,7 @@ namespace Main
                     }
                     else
                     {
+                        PrintBlinkingTextFile(@"..\..\Incorrect.txt");
                         BossSpeaks(boss);
                         Console.WriteLine(" Your answer is incorrect! I'll let you go further, but do you consider yourself worthy?");
                     }
@@ -154,11 +135,13 @@ namespace Main
                     }
                     else if (completedSuccessfully == true)
                     {
+                        PrintBlinkingTextFile(@"..\..\Correct.txt");
                         BossSpeaks(boss);
                         Console.WriteLine(" Congratulations! You win!");
                     }
                     else
                     {
+                        PrintBlinkingTextFile(@"..\..\Incorrect.txt");
                         BossSpeaks(boss);
                         Console.WriteLine(" Go away, maggot! Come back when you consider yourself worthy of speaking with me!");
                     }
@@ -278,6 +261,74 @@ namespace Main
             {
                 Console.WriteLine("{1} wins with {0} points.", score, names.First());
             }
+        }
+
+        private static void PrintTextFile(string path)
+        {
+            try
+            {
+                using (StreamReader sr = new StreamReader(path))
+                {
+                    while (sr.Peek() >= 0)
+                    {
+                        Console.WriteLine(sr.ReadLine());
+                        Thread.Sleep(150);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The process failed: {0}", e.ToString());
+            }
+            Thread.Sleep(2000);
+        }
+
+        private static void PrintBlinkingTextFile(string path)
+        {
+            StringBuilder sb = new StringBuilder();
+            string display;
+            try
+            {
+                using (StreamReader sr = new StreamReader(path))
+                {
+                    while (sr.Peek() >= 0)
+                    {
+
+
+                        sb.AppendLine(sr.ReadLine());
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The process failed: {0}", e.ToString());
+            }
+
+            display = sb.ToString();
+
+            for (int i = 0; i < 11; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(display);
+                    Thread.Sleep(150);
+                    Console.Clear();
+                }
+                else
+                {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.WriteLine(display);
+                    Thread.Sleep(150);
+                    Console.Clear();
+                }
+            }
+            Console.ResetColor();
+            Console.WriteLine(display);
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
         
     }
