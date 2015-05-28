@@ -22,7 +22,7 @@ namespace Main
             EndScreen();
         }
 
-        public static void StartNewGame()
+        private static void StartNewGame()
         {
             InitGame();
             Tick();
@@ -121,8 +121,7 @@ namespace Main
                 }
                 else
                 {
-                    Console.WriteLine(
-                        "As you step carefully along the road, a dreadful, hideous creature arises from the shadows.");
+                    Console.WriteLine("As you step carefully along the road, a dreadful, hideous creature arises from the shadows.");
                     Console.WriteLine("The air grows ripe with the stench of death and misery.");
                     Console.WriteLine("Your heart starts beating wildly, pumping blood into your head.");
                     Console.WriteLine("You know it's him. There's no turning back now.");
@@ -234,7 +233,7 @@ namespace Main
         {
             List<string> names = new List<string>();
             names.Add(players[0].Name);
-            double score = players[0].Points;
+            decimal score = players[0].Points;
             for (int i = 1; i < players.Count; i++)
             {
                 if (players[i].Points > score)
@@ -282,7 +281,6 @@ namespace Main
         private static void PrintBlinkingTextFile(string path)
         {
             StringBuilder sb = new StringBuilder();
-            string display;
             try
             {
                 using (StreamReader sr = new StreamReader(path))
@@ -300,7 +298,7 @@ namespace Main
                 Console.WriteLine("The process failed: {0}", e.ToString());
             }
 
-            display = sb.ToString();
+            string display = sb.ToString();
 
             for (int i = 0; i < 11; i++)
             {
