@@ -80,14 +80,20 @@ namespace Main
         {
             if (Players.Count > 1)
             {
-                goto MultiplayerMode;
+                MultiPlayer();
+            }
+            else
+            {
+                SinglePlayer();
             }
 
-        SingleplayerMode:
+        }
 
+        private static void SinglePlayer()
+        {
             var player = Players[0];
 
-        for (player.Level = 1; player.Level <= 5; player.Level++)
+            for (player.Level = 1; player.Level <= 5; player.Level++)
             {
                 Boss boss = player.GetCurrentBoss();
                 if (boss.Name != "Nakov")
@@ -115,12 +121,14 @@ namespace Main
                     {
                         PrintBlinkingTextFile(@"..\..\Incorrect.txt");
                         BossSpeaks(boss);
-                        Console.WriteLine(" Your answer is incorrect! I'll let you go further, but do you consider yourself worthy?");
+                        Console.WriteLine(
+                            " Your answer is incorrect! I'll let you go further, but do you consider yourself worthy?");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("As you step carefully along the road, a dreadful, hideous creature arises from the shadows.");
+                    Console.WriteLine(
+                        "As you step carefully along the road, a dreadful, hideous creature arises from the shadows.");
                     Console.WriteLine("The air grows ripe with the stench of death and misery.");
                     Console.WriteLine("Your heart starts beating wildly, pumping blood into your head.");
                     Console.WriteLine("You know it's him. There's no turning back now.");
@@ -147,10 +155,10 @@ namespace Main
                     }
                 }
             }
-            goto Finish;
+        }
 
-        MultiplayerMode:
-
+        private static void MultiPlayer()
+        {
             for (int i = 0; i < 5; i++)
             {
                 foreach (var pl in Players)
@@ -171,7 +179,7 @@ namespace Main
                     else if (completedSuccessfully == true)
                     {
                         pl.DoublePoints = false;
-                        pl.Points += 5 * pl.PointsModifier;
+                        pl.Points += 5*pl.PointsModifier;
                         if (i < 4)
                         {
                             pl.Awards.Add(boss.Award);
@@ -208,22 +216,20 @@ namespace Main
                         }
                         else if (completedSuccessfully == true)
                         {
-                                pl.Points += 5 * pl.PointsModifier;
-                                if (i < 4)
-                                {
-                                    pl.Awards.Add(boss.Award);
-                                }
-                            }
-                            else
+                            pl.Points += 5*pl.PointsModifier;
+                            if (i < 4)
                             {
-                                break;
+                                pl.Awards.Add(boss.Award);
                             }
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
                 }
             }
             CheckWin(Players);
-
-            Finish:;
         }
 
         private static void BossSpeaks(Boss boss)
