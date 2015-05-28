@@ -32,10 +32,12 @@ namespace Main
 
         private static void StartScreen()
         {
+            Console.SetBufferSize(300, 300);
             int width = Console.WindowWidth * 2;
             int height = Console.WindowHeight * 2;
 
             Console.SetWindowSize(width, height);
+            
 
             PrintTextFile(@"..\..\TeamCanrum.txt");
             Console.Clear();
@@ -99,6 +101,7 @@ namespace Main
                 if (boss.Name != "Nakov")
                 {
                     Console.WriteLine("{0} suddenly steps in front of you, blocking your way.", boss.Name);
+                    BossSpeaks(boss);
                     Console.WriteLine(" The way is shut, stranger! If you want passage you must complete the following task.");
                     BossSpeaks(boss);
                     Console.WriteLine(" If you succeed, I'll grant you passage and the knowledge of {0}.\n", boss.Award);
@@ -106,15 +109,16 @@ namespace Main
                     bool? completedSuccessfully = player.CompleteMission();
                     if (completedSuccessfully == true)
                     {
-                        PrintBlinkingTextFile(@"..\..\Correct.txt");
+                        PrintBlinkingTextFile(@"..\..\Correct.txt", ConsoleColor.Green);
                         BossSpeaks(boss);
                         Console.WriteLine(" Well done, lad! Here's your promised award! Go on!");
-                        Console.WriteLine("You now possess the knowledge of {0}", boss.Award);
+                        BossSpeaks(boss);
+                        Console.WriteLine(" You now possess the knowledge of {0}", boss.Award);
                         player.Awards.Add(boss.Award);
                     }
                     else
                     {
-                        PrintBlinkingTextFile(@"..\..\Incorrect.txt");
+                        PrintBlinkingTextFile(@"..\..\Incorrect.txt", ConsoleColor.Red);
                         BossSpeaks(boss);
                         Console.WriteLine(" Your answer is incorrect! I'll let you go further, but do you consider yourself worthy?");
                     }
@@ -131,17 +135,18 @@ namespace Main
                     bool? completedSuccessfully = player.CompleteMission();
                     if (completedSuccessfully == true)
                     {
-                        PrintBlinkingTextFile(@"..\..\Correct.txt");
+                        PrintBlinkingTextFile(@"..\..\Correct.txt", ConsoleColor.Green);
                         BossSpeaks(boss);
                         Console.WriteLine(" Congratulations! You win!");
                     }
                     else
                     {
-                        PrintBlinkingTextFile(@"..\..\Incorrect.txt");
+                        PrintBlinkingTextFile(@"..\..\Incorrect.txt", ConsoleColor.Red);
                         BossSpeaks(boss);
                         Console.WriteLine(" Go away, maggot! Come back when you consider yourself worthy of speaking with me!");
                     }
                 }
+                Console.Clear();
             }
         }
 
@@ -161,7 +166,7 @@ namespace Main
                     bool? completedSuccessfully = pl.CompleteMission();
                     if (completedSuccessfully == true)
                     {
-                        PrintBlinkingTextFile(@"..\..\Correct.txt");
+                        PrintBlinkingTextFile(@"..\..\Correct.txt", ConsoleColor.Green);
                         BossSpeaks(boss);
                         Console.WriteLine(" Well done, lad! Here's your promised award! Go on!");
                         pl.DoublePoints = false;
@@ -175,7 +180,7 @@ namespace Main
                     {
                         if (i == 4)
                         {
-                            PrintBlinkingTextFile(@"..\..\Incorrect.txt");
+                            PrintBlinkingTextFile(@"..\..\Incorrect.txt", ConsoleColor.Red);
                             BossSpeaks(boss);
                             Console.WriteLine(" You have one more chance to prove your worth!");
                         }
@@ -198,7 +203,7 @@ namespace Main
                         completedSuccessfully = pl.CompleteMission();
                         if (completedSuccessfully == true)
                         {
-                            PrintBlinkingTextFile(@"..\..\Correct.txt");
+                            PrintBlinkingTextFile(@"..\..\Correct.txt", ConsoleColor.Green);
                             BossSpeaks(boss);
                             Console.WriteLine(" Well done, lad! Here's your promised award! Go on!");
                             pl.Points += 5*pl.PointsModifier;
@@ -209,7 +214,7 @@ namespace Main
                         }
                         else
                         {
-                            PrintBlinkingTextFile(@"..\..\Incorrect.txt");
+                            PrintBlinkingTextFile(@"..\..\Incorrect.txt", ConsoleColor.Red);
                             BossSpeaks(boss);
                             Console.WriteLine(" Your answer is incorrect! I'll let you go further, but do you consider yourself worthy?");
                             break;
@@ -278,7 +283,7 @@ namespace Main
             Thread.Sleep(2000);
         }
 
-        private static void PrintBlinkingTextFile(string path)
+        private static void PrintBlinkingTextFile(string path, ConsoleColor color)
         {
             StringBuilder sb = new StringBuilder();
             try
@@ -305,14 +310,14 @@ namespace Main
                 if (i % 2 == 0)
                 {
                     Console.BackgroundColor = ConsoleColor.Black;
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = color;
                     Console.WriteLine(display);
                     Thread.Sleep(150);
                     Console.Clear();
                 }
                 else
                 {
-                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.BackgroundColor = color;
                     Console.ForegroundColor = ConsoleColor.Black;
                     Console.WriteLine(display);
                     Thread.Sleep(150);
