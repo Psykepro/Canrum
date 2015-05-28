@@ -104,12 +104,7 @@ namespace Main
                     Console.WriteLine(" If you succeed, I'll grant you passage and the knowledge of {0}.\n", boss.Award);
 
                     bool? completedSuccessfully = player.CompleteMission();
-                    if (completedSuccessfully == null)
-                    {
-                        //Compilation failed
-                        throw new NotImplementedException();
-                    }
-                    else if (completedSuccessfully == true)
+                    if (completedSuccessfully == true)
                     {
                         PrintBlinkingTextFile(@"..\..\Correct.txt");
                         BossSpeaks(boss);
@@ -121,8 +116,7 @@ namespace Main
                     {
                         PrintBlinkingTextFile(@"..\..\Incorrect.txt");
                         BossSpeaks(boss);
-                        Console.WriteLine(
-                            " Your answer is incorrect! I'll let you go further, but do you consider yourself worthy?");
+                        Console.WriteLine(" Your answer is incorrect! I'll let you go further, but do you consider yourself worthy?");
                     }
                 }
                 else
@@ -136,12 +130,7 @@ namespace Main
                     Console.WriteLine(" So... You think you've got what it takes. Let's find out.");
 
                     bool? completedSuccessfully = player.CompleteMission();
-                    if (completedSuccessfully == null)
-                    {
-                        //Compilation failed
-                        throw new NotImplementedException();
-                    }
-                    else if (completedSuccessfully == true)
+                    if (completedSuccessfully == true)
                     {
                         PrintBlinkingTextFile(@"..\..\Correct.txt");
                         BossSpeaks(boss);
@@ -171,13 +160,11 @@ namespace Main
                     Console.WriteLine(pl.Name + " meets " + boss.Name);
 
                     bool? completedSuccessfully = pl.CompleteMission();
-                    if (completedSuccessfully == null)
+                    if (completedSuccessfully == true)
                     {
-                        //Compilation failed
-                        throw new NotImplementedException();
-                    }
-                    else if (completedSuccessfully == true)
-                    {
+                        PrintBlinkingTextFile(@"..\..\Correct.txt");
+                        BossSpeaks(boss);
+                        Console.WriteLine(" Well done, lad! Here's your promised award! Go on!");
                         pl.DoublePoints = false;
                         pl.Points += 5*pl.PointsModifier;
                         if (i < 4)
@@ -189,6 +176,7 @@ namespace Main
                     {
                         if (i == 4)
                         {
+                            PrintBlinkingTextFile(@"..\..\Incorrect.txt");
                             BossSpeaks(boss);
                             Console.WriteLine(" You have one more chance to prove your worth!");
                         }
@@ -209,13 +197,11 @@ namespace Main
                         }
 
                         completedSuccessfully = pl.CompleteMission();
-                        if (completedSuccessfully == null)
+                        if (completedSuccessfully == true)
                         {
-                            //Compilation failed
-                            throw new NotImplementedException();
-                        }
-                        else if (completedSuccessfully == true)
-                        {
+                            PrintBlinkingTextFile(@"..\..\Correct.txt");
+                            BossSpeaks(boss);
+                            Console.WriteLine(" Well done, lad! Here's your promised award! Go on!");
                             pl.Points += 5*pl.PointsModifier;
                             if (i < 4)
                             {
@@ -224,9 +210,13 @@ namespace Main
                         }
                         else
                         {
+                            PrintBlinkingTextFile(@"..\..\Incorrect.txt");
+                            BossSpeaks(boss);
+                            Console.WriteLine(" Your answer is incorrect! I'll let you go further, but do you consider yourself worthy?");
                             break;
                         }
                     }
+                    pl.Level++;
                 }
             }
             CheckWin(Players);
